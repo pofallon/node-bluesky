@@ -12,6 +12,7 @@ module.exports = testCase({
     this.tableName = "foobar";
     this.partitionKey = "foo";
     this.rowKey = "bar";
+    
     callback();
   },
 
@@ -34,7 +35,7 @@ module.exports = testCase({
 
   tableInsertRow: function (test) {
     var t = new storage.table(this.account, this.key, this.tableName);
-    t.insert(this.partitionKey,this.rowKey,{'one':'uno'}, function(err) {
+    t.insert(this.partitionKey,this.rowKey,{'one':'uno', 'two': 2, 'three': true, 'four': new Date('2010-12-23T23:12:11.234Z') }, function(err) {
       test.equals(err,null);
       test.done();
     });
@@ -48,10 +49,37 @@ module.exports = testCase({
     t.query().all(function(err, results) {
       test.equals(results[0].PartitionKey,myPartition);
       test.equals(results[0].RowKey,myRow);
-      test.equals(results[0].one,'uno');
+      
+      test.equals(typeof(results[0].one), 'string');
+      test.equals(results[0].one, 'uno');
+      
+      test.equals(typeof(results[0].two), 'number');
+      test.equals(results[0].two, 2);
+      
+      test.equals(typeof(results[0].three), 'boolean');
+      test.equals(results[0].three, true);
+      
+      test.equals((results[0].four instanceof Date), true);
+      var d = new Date('2010-12-23T23:12:11.234Z');
+      test.deepEqual(results[0].four,d);
+      
       test.done();
     });
   },
+  
+  /* tableQueryBasic: function (test) {
+    var myPartition = this.partitionKey;
+    var myRow = this.rowKey;
+    
+    var t = new storage.table(this.account, this.key, this.tableName);
+    t.query({one:'uno'}).all(function(err, results) {
+      test.equals(results[0].PartitionKey,myPartition);
+      test.equals(results[0].RowKey,myRow);
+      test.equals(results[0].one,'uno');
+      test.done();
+    });
+  }, */
+
 
   tableDeleteRow: function (test) {
     var t = new storage.table(this.account, this.key, this.tableName);

@@ -29,7 +29,7 @@ Creates a new instance of the `Table` object (the same as returned by `storage.c
 
 ### table.insert(partition, row, data, callback)
 
-Inserts the key/value pairs specified in `data` into the table using the supplied `partition` and `row` keys.  (Currently only supports string data.)
+Inserts the key/value pairs specified in `data` into the table using the supplied `partition` and `row` keys.  (Boolean, Number, String and DateTime datatypes supported -- Number currently defaults to Edm.Double)
 
 ### table.del(partition, row, callback)
 
