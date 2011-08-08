@@ -35,9 +35,9 @@ Inserts the key/value pairs specified in `data` into the table using the supplie
 
 Removes the table data at the supplied `partition` and `row` keys.
 
-### table.query()
+### table.query(criteria)
 
-Returns a ResultSet object representing the appropriate query.  (Currently only supports "all" table elements.)  Note that the REST call isn't actually made until a method on the ResultSet is invoked.
+Returns a ResultSet object representing the appropriate query.  Currently supports only tests for equality (i.e. no greater than, etc. yet).  Note that the REST call isn't actually made until a method on the ResultSet is invoked.
 
 ### resultset.all(callback)
 

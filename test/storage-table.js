@@ -67,18 +67,26 @@ module.exports = testCase({
     });
   },
   
-  /* tableQueryBasic: function (test) {
+  tableQueryBasicFilter: function (test) {
     var myPartition = this.partitionKey;
     var myRow = this.rowKey;
     
     var t = new storage.table(this.account, this.key, this.tableName);
-    t.query({one:'uno'}).all(function(err, results) {
-      test.equals(results[0].PartitionKey,myPartition);
-      test.equals(results[0].RowKey,myRow);
-      test.equals(results[0].one,'uno');
-      test.done();
+    
+    t.insert(this.partitionKey,'foo2',{'one':'unouno', 'two':4, 'three':false, 'four': new Date() }, function(err) {
+      test.equals(err,null,"Second table row insert failed");
+      t.query().all(function(err,r) {
+        test.equals(r.length,2,"Second table row not returned in results");
+        t.query({'one':'uno','two': 2, 'three': true}).all(function(err, results) {
+          test.equals(results.length,1);
+          test.equals(results[0].PartitionKey,myPartition);
+          test.equals(results[0].RowKey,myRow);
+          test.equals(results[0].one,'uno');
+          test.done();
+        });
+      });
     });
-  }, */
+  },
 
 
   tableDeleteRow: function (test) {
