@@ -87,7 +87,27 @@ module.exports = testCase({
       });
     });
   },
-
+  
+  tableQueryForEach: function(test) {
+    var myPartition = this.partitionKey;
+    var myRow = this.rowKey;
+    
+    var t = new storage.table(this.account, this.key, this.tableName);
+    
+    var manualCount = 0;
+    
+    t.query().forEach(function(err, row) {
+      manualCount++;
+    }, function(err, count) {
+      test.equals(count,manualCount);
+      var secondCount = 0;
+      t.query().forEach(function(err, row) {
+        if (count == ++secondCount) {
+          test.done();
+        }
+      });
+    });
+  },
 
   tableDeleteRow: function (test) {
     var t = new storage.table(this.account, this.key, this.tableName);

@@ -41,7 +41,11 @@ Returns a ResultSet object representing the appropriate query.  Currently suppor
 
 ### resultset.all(callback)
 
-Invokes the callback with an array of results.  (Currently does not support paging through results via the REST API.)
+Invokes the callback with an array of results.  (Currently does not support query pagination.)
+
+### resultset.forEach(callback, doneCallback)
+
+Invokes the callback for each row in the resultset and the (optional) doneCallback with the count of rows when done.  Errors are sent to doneCallback, if provided, or callback otherwise.  (Both callback and doneCallback should always expect 'err' as their first parameter in either case.)  (Currently does not support query pagination.)
 
 # TODO
 
