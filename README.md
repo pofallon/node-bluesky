@@ -1,9 +1,9 @@
-# azurejs #
+# node-azure #
 A node.js library for accessing the Windows Azure REST API's.
 
 ## Usage
 
-See the [tests](azurejs/tree/master/test) for examples
+See the [tests](node-azure/tree/master/test) for examples
 
 # API
 
