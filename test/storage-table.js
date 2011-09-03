@@ -5,7 +5,8 @@ var storage = require('../lib/azure').storage;
 module.exports = testCase({
 
   setUp: function (callback) {
-    var testCredentials = JSON.parse(fs.readFileSync(process.env.HOME + '/.azurejs/test.json','ascii'));
+    var path = process.env.HOME || (process.env.HOMEDRIVE + process.env.HOMEPATH);
+    var testCredentials = JSON.parse(fs.readFileSync(path + '/.azurejs/test.json','ascii'));
     this.account = testCredentials.account;
     this.key = testCredentials.key;
 
