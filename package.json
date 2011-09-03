@@ -5,7 +5,6 @@
   "dependencies": {
     "request": "1.9.x",
     "dateformat": "1.0.x",
-    "base64": "2.0.x",
     "sax": "0.2.x"
   },
   "devDependencies": {
