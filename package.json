@@ -1,7 +1,9 @@
 {
-  "name": "azurejs",
+  "name": "azure",
   "description": "A node.js library for accessing Azure REST-based services",
+  "keywords": ["azure"],
   "author": "Paul O'Fallon <paul@ofallonfamily.com>",
+  "homepage": "https://github.com/pofallon/node-azure",
   "dependencies": {
     "request": "1.9.x",
     "dateformat": "1.0.x",
@@ -10,5 +12,14 @@
   "devDependencies": {
     "nodeunit": "0.5.x"
   },
-  "engine": "node >= 0.4.1"
+  "engine": "node >= 0.4.1",
+  "version": "0.1.0",
+  "files": [
+    "index.js",
+    "lib",
+    "package.json",
+    "README.md",
+    "test"
+  ],
+  "main": "index"
 }
