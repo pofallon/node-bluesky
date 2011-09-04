@@ -8,10 +8,14 @@ var storage = require('azure').storage;
 
 var t = storage.table(account, key, tableName);
 
-t.query({'user':'joe','visits':1,'isPremium':true}).forEach(function(err,row) {
+t.query({'user':'joe','visits':1,'isPremium':true}).forEach(function(err, row) {
+  
   console.log(row.user + ", " + row.visits + ", " + row.isPremium);
+  
 }, function(err, count) {
+  
   console.log(count + " users matched your query");
+  
 });
 ```
 
@@ -40,9 +44,7 @@ This library depends on:
 
 On Windows, manually download the above dependencies and place them in node-azure/node_modules
 
-# API
-
-## Table Storage
+## Table Storage API
 
 ### storage.createTable(account, key, tableName, callback)
 
