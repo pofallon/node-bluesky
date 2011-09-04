@@ -35,7 +35,7 @@ module.exports = testCase({
   },
 
   tableInsertRow: function (test) {
-    var t = new storage.table(this.account, this.key, this.tableName);
+    var t = storage.table(this.account, this.key, this.tableName);
     t.insert(this.partitionKey,this.rowKey,{'one':'uno', 'two': 2, 'three': true, 'four': new Date('2010-12-23T23:12:11.234Z') }, function(err) {
       test.equals(err,null);
       test.done();
@@ -46,7 +46,7 @@ module.exports = testCase({
     var myPartition = this.partitionKey;
     var myRow = this.rowKey;
 
-    var t = new storage.table(this.account, this.key, this.tableName);
+    var t = storage.table(this.account, this.key, this.tableName);
     t.query().all(function(err, results) {
       test.equals(results[0].PartitionKey,myPartition);
       test.equals(results[0].RowKey,myRow);
@@ -72,7 +72,7 @@ module.exports = testCase({
     var myPartition = this.partitionKey;
     var myRow = this.rowKey;
     
-    var t = new storage.table(this.account, this.key, this.tableName);
+    var t = storage.table(this.account, this.key, this.tableName);
     
     t.insert(this.partitionKey,'foo2',{'one':'unouno', 'two':4, 'three':false, 'four': new Date() }, function(err) {
       test.equals(err,null,"Second table row insert failed");
@@ -93,7 +93,7 @@ module.exports = testCase({
     var myPartition = this.partitionKey;
     var myRow = this.rowKey;
     
-    var t = new storage.table(this.account, this.key, this.tableName);
+    var t = storage.table(this.account, this.key, this.tableName);
     
     var manualCount = 0;
     
@@ -111,7 +111,7 @@ module.exports = testCase({
   },
 
   tableDeleteRow: function (test) {
-    var t = new storage.table(this.account, this.key, this.tableName);
+    var t = storage.table(this.account, this.key, this.tableName);
     t.del(this.partitionKey,this.rowKey,function(err) {
       test.equals(err,null);
       test.done();
