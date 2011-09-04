@@ -38,8 +38,6 @@ This library depends on:
 
 On Windows, manually download the above dependencies and place them in node-azure/node_modules
 
-***
-
 # API
 
 ## Table Storage
