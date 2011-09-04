@@ -25,10 +25,10 @@ The library can used with both Windows and non-Windows versions of node.js:
 
 This library depends on:
 
-* mikeal/request
-* felixge/node-dateformat
-* isaacs/sax-js
-* caolan/nodeunit (for unit tests)
+* [mikeal/request](https://github.com/mikeal/request)
+* [felixge/node-dateformat](https://github.com/felixge/node-dateformat)
+* [isaacs/sax-js](https://github.com/isaacs/sax-js)
+* [caolan/nodeunit](https://github.com/caolan/nodeunit) (for unit tests)
 
 ## Install
 
