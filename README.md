@@ -5,7 +5,9 @@ A node.js library for accessing the Windows Azure REST API's.
 
 ```javascript
 var storage = require('azure').storage;
+
 var t = storage.table(account, key, tableName);
+
 t.query({'user':'joe','visits':1,'isPremium':true}).forEach(function(err,row) {
   console.log(row.user + ", " + row.visits + ", " + row.isPremium);
 }, function(err, count) {
