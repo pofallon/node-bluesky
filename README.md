@@ -44,7 +44,7 @@ On Windows, manually download the above dependencies and place them in node-azur
 
 ### storage.createTable(account, key, tableName, callback)
 
-Creates a new table with the supplied `tableName` on the specified `account`.  `callback` is passed an instance of `Table` representing the newly created table.
+Creates a new table with the supplied `tableName` on the specified `account`.  `callback` is passed a reference to the newly created table.
 
 ### storage.listTables(account, key, callback)
 
