@@ -25,7 +25,7 @@ See the [tests](node-azure/tree/master/test) for additional examples
 
 The library can used with both Windows and non-Windows versions of node.js:
 
-![Tests](https://img.skitch.com/20110904-8fdbnpfe8dj36f55a8462mdc8p.jpg)
+![Tests](https://bit.ly/onBj8Q)
 
 ## Dependencies
 
