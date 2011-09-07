@@ -1,3 +1,9 @@
+/*!
+ * node-azure
+ * Copyright(c) 2011 Paul O'Fallon <paul@ofallonfamily.com>
+ * MIT Licensed
+ */
+
 var fs = require('fs');
 var testCase = require('nodeunit').testCase;
 var storage = require('../lib/azure').storage;
