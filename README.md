@@ -4,9 +4,9 @@ A node.js library for accessing the Windows Azure REST API's.
 ## Usage
 
 ```javascript
-var storage = require('azure').storage;
+var storage = require('azure').storage({account: 'account', key: 'key'});
 
-var t = storage.table(account, key, tableName);
+var t = storage.table(tableName);
 
 t.query({'user': 'joe', 'visits': 1, 'isPremium': true}).forEach(function(err, row) {
   
@@ -46,19 +46,26 @@ On Windows, manually download the above dependencies and place them in node-azur
 
 ## Table Storage API
 
-### storage.createTable(account, key, tableName, callback)
+### require('azure').storage(options);
 
-Creates a new table with the supplied `tableName` on the specified `account`.  `callback` is passed a reference to the newly created table.
+Returns a reference to 'storage' with the supplied options.  Available options include:
 
-### storage.listTables(account, key, callback)
+* account (required)
+* key (required)
 
-Lists all tables in the specified `account`.  Invokes `callback` with an array of table names.
+### storage.createTable(tableName, callback)
 
-### storage.removeTable(account, key, tableName, callback)
+Creates a new table with the supplied `tableName` on this storage account.  `callback` is passed a reference to the newly created table.
+
+### storage.listTables(callback)
+
+Lists all tables in this storage account.  Invokes `callback` with an array of table names.
+
+### storage.removeTable(tableName, callback)
 
 Removes the table specified by `tableName`.
 
-### storage.table(account, key, tableName)
+### storage.table(tableName)
 
 Returns a reference to a table (the same as returned by `storage.createTable`).
 
