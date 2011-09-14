@@ -115,6 +115,17 @@ module.exports = testCase({
       });
     });
   },
+  
+  tableUpdateRow: function (test) {
+    var t = storage.table(this.tableName);
+    t.update(this.partitionKey,this.rowKey,{'one':'eleven', 'two': 22, 'three': true, 'four': new Date('2010-12-23T23:12:11.234Z') }, function(err) {
+      test.equals(err,null);
+      t.query().all(function(err,rows) {
+        test.equals(rows[0].one,'eleven');
+        test.done();
+      });
+    });
+  },
 
   tableDeleteRow: function (test) {
     var t = storage.table(this.tableName);
