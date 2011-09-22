@@ -126,6 +126,17 @@ module.exports = testCase({
       });
     });
   },
+  
+  tableUpsertRow: function (test) {
+    var t = storage.table(this.tableName);
+    t.update(this.partitionKey,"upsertRow",{'one':'1111', 'two':222, 'three': false }, {upsert: true}, function(err) {
+      test.equals(err,null);
+      t.query().forEach(null,function(err,count) {
+        test.equals(count,3);
+        test.done();
+      });
+    });
+  },
 
   tableDeleteRow: function (test) {
     var t = storage.table(this.tableName);
