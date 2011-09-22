@@ -87,7 +87,11 @@ Executes the specified query and invokes the callback with an array of results.
 
 Executes the specified query and invokes `callback` for each row in the results and (optionally) `doneCallback` with the count of rows when done.  Errors are sent to `callback` or `doneCallback` (if provided).  Both callback and doneCallback expect 'err' as their first parameter.
 
-# TODO
+## Special Thanks
+
+…to Cerebrata for [Cloud Storage Studio](http://www.cerebrata.com/products/cloudstoragestudio/) - an indispensible tool (along with [fiddler2](http://www.fiddler2.com/fiddler2/)) in the node-azure debugging process!
+
+## TODO
 
 * Finish table, add blob and queue API's
 * Management API's
