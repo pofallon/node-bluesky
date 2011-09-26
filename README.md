@@ -79,7 +79,7 @@ Inserts the key/value pairs specified in `data` into the table using the supplie
 
 Replaces any existing data at the supplied `partition` and `row` keys with the values provided in `data`.  Available options include:
 
-* upsert - When `true`, and no value currently exists at `partition` and `row`, the data will be inserted.  Defaults to `false`.
+* upsert - When `true`, and no row currently exists at `partition` and `row`, the data will be inserted.  Defaults to `false`.
 
 ### table.del(partition, row, callback)
 
