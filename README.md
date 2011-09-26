@@ -75,17 +75,41 @@ Returns a reference to a table (the same as returned by `storage.createTable`).
 
 Inserts the key/value pairs specified in `data` into the table using the supplied `partition` and `row` keys.  Boolean, Number, String and DateTime datatypes supported -- Number currently defaults to `Edm.Double`.
 
+### table.update(partition, row, data, options?, callback)
+
+Replaces any existing data at the supplied `partition` and `row` keys with the values provided in `data`.  Available options include:
+
+* upsert - When `true`, and no value currently exists at `partition` and `row`, the data will be inserted.  Defaults to `false`.
+
 ### table.del(partition, row, callback)
 
 Removes the table data at the supplied `partition` and `row` keys.
 
-### table.query(criteria).all(callback)
+### table.filter(criteria).all(callback)
 
-Executes the specified query and invokes the callback with an array of results.
+Applies the filter and invokes the callback with an array of results.
 
-### table.query(criteria).forEach(callback, doneCallback)
+### table.filter(criteria).forEach(callback, doneCallback)
 
-Executes the specified query and invokes `callback` for each row in the results and (optionally) `doneCallback` with the count of rows when done.  Errors are sent to `callback` or `doneCallback` (if provided).  Both callback and doneCallback expect 'err' as their first parameter.
+Applies the filter and invokes `callback` for each row in the results and (optionally) `doneCallback` with the count of rows when done.  Errors are sent to `callback` or `doneCallback` (if provided).  Both callback and doneCallback expect 'err' as their first parameter.
+
+### table.fields(fieldArray).all(callback)
+
+Returns only the subset of fields specified in fieldArray.  Can be useful for performance and bandwidth purposes.
+
+### A Note about `filter` and `fields`
+
+These are meant to be chained in a fluent API style, for example:
+
+```javascript
+table.fields(['firstName','lastName']).filter({'state':'CA}).all(callback);
+```
+
+`filter` and `fields` are also optional, so 
+```javascript
+table.all(callback);
+```
+is also valid.
 
 ## Special Thanks
 

@@ -48,12 +48,12 @@ module.exports = testCase({
     });
   },
 
-  tableQueryAll: function (test) {
+  tableNoFilterAll: function (test) {
     var myPartition = this.partitionKey;
     var myRow = this.rowKey;
 
     var t = storage.table(this.tableName);
-    t.query().all(function(err, results) {
+    t.all(function(err, results) {
       test.equals(results[0].PartitionKey,myPartition);
       test.equals(results[0].RowKey,myRow);
       
@@ -74,7 +74,7 @@ module.exports = testCase({
     });
   },
   
-  tableQueryBasicFilter: function (test) {
+  tableBasicFilterAll: function (test) {
     var myPartition = this.partitionKey;
     var myRow = this.rowKey;
     
@@ -82,9 +82,10 @@ module.exports = testCase({
     
     t.insert(this.partitionKey,'foo2',{'one':'unouno', 'two':4, 'three':false, 'four': new Date() }, function(err) {
       test.equals(err,null,"Second table row insert failed");
-      t.query().all(function(err,r) {
+      t.all(function(err,r) {
         test.equals(r.length,2,"Second table row not returned in results");
-        t.query({'one':'uno','two': 2, 'three': true}).all(function(err, results) {
+        t.filter({'one':'uno','two': 2, 'three': true}).all(function(err, results) {
+          test.equals(err,null);
           test.equals(results.length,1);
           test.equals(results[0].PartitionKey,myPartition);
           test.equals(results[0].RowKey,myRow);
@@ -95,7 +96,7 @@ module.exports = testCase({
     });
   },
   
-  tableQueryForEach: function(test) {
+  tableNoFilterForEach: function(test) {
     var myPartition = this.partitionKey;
     var myRow = this.rowKey;
     
@@ -103,12 +104,12 @@ module.exports = testCase({
     
     var manualCount = 0;
     
-    t.query().forEach(function(err, row) {
+    t.forEach(function(err, row) {
       manualCount++;
     }, function(err, count) {
       test.equals(count,manualCount);
       var secondCount = 0;
-      t.query().forEach(function(err, row) {
+      t.forEach(function(err, row) {
         if (count == ++secondCount) {
           test.done();
         }
@@ -116,11 +117,28 @@ module.exports = testCase({
     });
   },
   
+  tableFieldsAll: function(test) {
+    
+    var t = storage.table(this.tableName);
+    
+    var thePartitionKey = this.partitionKey;
+    var theRowKey = this.rowKey;
+    
+    t.fields(['PartitionKey','RowKey']).all(function(err,rows) {
+      test.equals(err,null);
+      test.equals(rows[0].PartitionKey,thePartitionKey);
+      test.equals(rows[0].RowKey.theRowKey);
+      test.equals(rows[0].one,null);
+      test.done();
+    });
+  },
+    
+  
   tableUpdateRow: function (test) {
     var t = storage.table(this.tableName);
     t.update(this.partitionKey,this.rowKey,{'one':'eleven', 'two': 22, 'three': true, 'four': new Date('2010-12-23T23:12:11.234Z') }, function(err) {
       test.equals(err,null);
-      t.query().all(function(err,rows) {
+      t.all(function(err,rows) {
         test.equals(rows[0].one,'eleven');
         test.done();
       });
@@ -131,7 +149,7 @@ module.exports = testCase({
     var t = storage.table(this.tableName);
     t.update(this.partitionKey,"upsertRow",{'one':'1111', 'two':222, 'three': false }, {upsert: true}, function(err) {
       test.equals(err,null);
-      t.query().forEach(null,function(err,count) {
+      t.forEach(null,function(err,count) {
         test.equals(count,3);
         test.done();
       });
