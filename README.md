@@ -87,11 +87,11 @@ Removes the table data at the supplied `partition` and `row` keys.
 
 ### table.fields(fieldArray)
 
-Defines a subset of fields to be returned, specified in fieldArray.  Can be useful for performance and bandwidth purposes.
+Defines a subset of fields to be returned from a query, specified in fieldArray.  Can be useful for performance and bandwidth purposes.
 
 ### table.filter(criteria)
 
-Applies a filter to the rows that will be returned.
+Applies a filter to the rows that will be returned from a query.
 
 ### table.all(callback)
 
@@ -101,9 +101,9 @@ Applies any `fields` or `filters` and invokes `callback` with an array of the re
 
 Applies any `fields` or `filters` and invokes `callback` for each row in the results and (optionally) `doneCallback` with the count of rows when done.  (Errors are sent to `callback`, or `doneCallback` if provided.  Both callback and doneCallback expect 'err' as their first parameter.)
 
-### A Note about `table` methods
+### A Note about 'table' methods
 
-The `filter` and `field` methods are meant to be chained with `all` or `forEach` in a fluent API style, for example:
+`filter` and `field` are meant to be chained with `all` or `forEach` in a fluent API style, for example:
 
 ```javascript
 table.fields(['firstName','lastName']).filter({'state':'CA'}).forEach(callback, doneCallback);
