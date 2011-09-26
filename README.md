@@ -85,31 +85,29 @@ Replaces any existing data at the supplied `partition` and `row` keys with the v
 
 Removes the table data at the supplied `partition` and `row` keys.
 
-### table.filter(criteria).all(callback)
+### table.fields(fieldArray)
 
-Applies the filter and invokes the callback with an array of results.
+Defines a subset of fields to be returned, specified in fieldArray.  Can be useful for performance and bandwidth purposes.
 
-### table.filter(criteria).forEach(callback, doneCallback)
+### table.filter(criteria)
 
-Applies the filter and invokes `callback` for each row in the results and (optionally) `doneCallback` with the count of rows when done.  Errors are sent to `callback` or `doneCallback` (if provided).  Both callback and doneCallback expect 'err' as their first parameter.
+Applies a filter to the rows that will be returned.
 
-### table.fields(fieldArray).all(callback)
+### table.all(callback)
 
-Returns only the subset of fields specified in fieldArray.  Can be useful for performance and bandwidth purposes.
+Applies any `fields` or `filters` and invokes `callback` with an array of the results.
 
-### A Note about `filter` and `fields`
+### table.forEach(callback, doneCallback)
 
-These are meant to be chained in a fluent API style, for example:
+Applies any `fields` or `filters` and invokes `callback` for each row in the results and (optionally) `doneCallback` with the count of rows when done.  (Errors are sent to `callback`, or `doneCallback` if provided.  Both callback and doneCallback expect 'err' as their first parameter.)
+
+### A Note about `table` methods
+
+The `filter` and `field` methods are meant to be chained with `all` or `forEach` in a fluent API style, for example:
 
 ```javascript
-table.fields(['firstName','lastName']).filter({'state':'CA}).all(callback);
+table.fields(['firstName','lastName']).filter({'state':'CA'}).forEach(callback, doneCallback);
 ```
-
-`filter` and `fields` are also optional, so 
-```javascript
-table.all(callback);
-```
-is also valid.
 
 ## Special Thanks
 
