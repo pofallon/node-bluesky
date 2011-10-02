@@ -13,7 +13,7 @@
     "nodeunit": "0.5.x"
   },
   "engine": "node >= 0.4.1",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "files": [
     "index.js",
     "lib",
