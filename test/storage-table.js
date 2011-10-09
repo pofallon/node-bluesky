@@ -90,7 +90,12 @@ module.exports = testCase({
           test.equals(results[0].PartitionKey,myPartition);
           test.equals(results[0].RowKey,myRow);
           test.equals(results[0].one,'uno');
-          test.done();
+          // Now make sure filter is gone for subsequent requests
+          t.all(function(err,r2) {
+            test.equals(err,null);
+            test.equals(r2.length,2);
+            test.done();
+          });
         });
       });
     });
@@ -129,7 +134,12 @@ module.exports = testCase({
       test.equals(rows[0].PartitionKey,thePartitionKey);
       test.equals(rows[0].RowKey.theRowKey);
       test.equals(rows[0].one,null);
-      test.done();
+      // Make sure full field list is present in subsequent invocations
+      t.all(function(err,r2) {
+        test.equals(err,null);
+        test.equals(r2[0].one,'uno');
+        test.done();
+      });
     });
   },
     
