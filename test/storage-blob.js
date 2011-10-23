@@ -21,4 +21,38 @@ module.exports = testCase({
     
   },
   
+  createContainer: function (test) {
+    var theContainer = this.containerName;
+    storage.createContainer(theContainer, function(err,container) {
+      test.equals(err,null);
+      test.equals(container.name,theContainer);
+      test.done();
+    });
+  },
+
+  createdContainerInList: function (test) {
+    var theContainer = this.containerName;
+    storage.listContainers(function(err,containers) {
+      test.equals(err,null);
+      test.notStrictEqual(containers.indexOf(theContainer),-1);
+      test.done();
+    });
+  },
+  
+  removeContainer: function (test) {
+    storage.removeContainer(this.containerName, function(err) {
+      test.equals(err,null);
+      test.done();
+    });
+  },
+  
+  containerNoLongerInList: function (test) {
+    var theContainer = this.containerName;
+    storage.listContainers(function(err,containers) {
+      test.equals(err,null);
+      test.strictEqual(containers.indexOf(theContainer),-1);
+      test.done();
+    });
+  },
+  
 });
