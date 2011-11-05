@@ -16,7 +16,8 @@ module.exports = testCase({
 
   setUp: function (callback) {
 
-    this.queueName = "foobar";
+    this.queueName = 'fooqueue';
+
     callback();
     
   },
@@ -38,6 +39,34 @@ module.exports = testCase({
       test.done();
     });
   },
+
+  queuePutMessage: function (test) {
+    var queue = storage.queue(this.queueName);
+    queue.put('Queue Test Message', function(err) {
+      test.equals(err,null);
+      test.done();
+    });
+  },
+  
+  queuePeekMessage: function (test) {
+    var queue = storage.queue(this.queueName);
+    queue.peek(function(err, message) {
+      test.equals(err,null);
+      test.done();
+    });
+  },
+  
+  queueGetAndDeleteMessage: function(test) {
+    var queue = storage.queue(this.queueName);
+    queue.get(function(err, message) {
+      test.equals(err,null);
+      test.equals(message.body,'Queue Test Message');
+      queue.del(message.id, message.popReceipt, function(err) {
+        test.equals(err,null);
+        test.done();
+      });
+    });
+  }, 
   
   removeQueue: function (test) {
     storage.removeQueue(this.queueName, function(err) {
