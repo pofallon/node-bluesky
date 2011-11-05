@@ -67,6 +67,22 @@ module.exports = testCase({
       });
     });
   }, 
+
+  queuePolling: function(test) {
+    var queue = storage.queue(this.queueName);
+    queue.on('message', function(m) {
+      queue.poll(false);
+      test.equals(m.body,'Queue Poll Message');
+      queue.del(m.id, m.popReceipt, function(err) {
+        test.equals(err,null);
+        test.done();
+      });
+    });
+    queue.poll(10000);  // Every 10 sec.
+    queue.put('Queue Poll Message', function(err) {
+      test.equals(err,null);
+    });
+  },
   
   removeQueue: function (test) {
     storage.removeQueue(this.queueName, function(err) {
