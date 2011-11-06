@@ -5,6 +5,7 @@
  */
 
 var fs = require('fs');
+var MemoryStream = require('memorystream');
 var testCase = require('nodeunit').testCase;
 
 var path = process.env.HOME || (process.env.HOMEDRIVE + process.env.HOMEPATH);
@@ -16,7 +17,7 @@ module.exports = testCase({
 
   setUp: function (callback) {
 
-    this.containerName = "foobar";
+    this.containerName = "fooblob";
     callback();
     
   },
@@ -39,16 +40,34 @@ module.exports = testCase({
     });
   },
 
-  /* blobGet: function (test) {
+  blobPut: function (test) {
+    var c = storage.container(this.containerName);
+    var memStream = new MemoryStream();
+    var s = c.put('blob.txt');
+    s.on('end', function() {
+      test.done();
+    });
+    s.on('error', function(err) {
+      test.equals(err,null,"Stream emitted an error event.");
+      test.done();
+    });
+    memStream.pipe(s);
+    memStream.write('This is a text blob');
+    memStream.end();
+  },
+
+  blobGet: function (test) {
+    var memStream = new MemoryStream(null, {readable: false});
+
     var c = storage.container(this.containerName);
     var s = c.get('blob.txt');
     s.on("end", function() {
-      process.stdout.write("Goodbye\n");
+      test.equals(memStream.getAll(),'This is a text blob');
+      test.done();
     });
-    s.pipe(process.stdout, { end: false });
+    s.pipe(memStream);
     
-    // console.dir(s);
-  }, */
+  },
   
   removeContainer: function (test) {
     storage.removeContainer(this.containerName, function(err) {
