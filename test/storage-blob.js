@@ -38,6 +38,17 @@ module.exports = testCase({
       test.done();
     });
   },
+
+  /* blobGet: function (test) {
+    var c = storage.container(this.containerName);
+    var s = c.get('blob.txt');
+    s.on("end", function() {
+      process.stdout.write("Goodbye\n");
+    });
+    s.pipe(process.stdout, { end: false });
+    
+    // console.dir(s);
+  }, */
   
   removeContainer: function (test) {
     storage.removeContainer(this.containerName, function(err) {
