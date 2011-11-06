@@ -26,6 +26,8 @@ module.exports = testCase({
     var theQueue = this.queueName;
     storage.createQueue(theQueue, function(err,queue) {
       test.equals(err,null);
+      test.notEqual(queue,null);
+      if (!queue) { queue = {}; }
       test.equals(queue.name,theQueue);
       test.done();
     });

@@ -27,6 +27,8 @@ module.exports = testCase({
     var theTable = this.tableName;
     storage.createTable(theTable, function(err,table) {
       test.equals(err,null);
+      test.notEqual(table,null);
+      if (!table) { table = {}; }
       test.equals(table.name,theTable);
       test.done();
     });

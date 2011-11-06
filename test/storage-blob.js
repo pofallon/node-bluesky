@@ -26,6 +26,8 @@ module.exports = testCase({
     var theContainer = this.containerName;
     storage.createContainer(theContainer, function(err,container) {
       test.equals(err,null);
+      test.notEqual(container,null);
+      if (!container) { container = {}; }
       test.equals(container.name,theContainer);
       test.done();
     });
@@ -57,15 +59,23 @@ module.exports = testCase({
   },
 
   blobGet: function (test) {
-    var memStream = new MemoryStream(null, {readable: false});
 
-    var c = storage.container(this.containerName);
-    var s = c.get('blob.txt');
-    s.on("end", function() {
-      test.equals(memStream.getAll(),'This is a text blob');
-      test.done();
-    });
-    s.pipe(memStream);
+    var that = this;
+
+    // Need to give it a second because immediately 
+    // 'get'-ing the blob sometimes returns not found
+
+    setTimeout(function() {
+      var memStream = new MemoryStream(null, {readable: false});
+
+      var c = storage.container(that.containerName);
+      var s = c.get('blob.txt');
+      s.on("end", function() {
+        test.equals(memStream.getAll(),'This is a text blob');
+        test.done();
+      });
+      s.pipe(memStream);
+    }, 1000);
     
   },
   
