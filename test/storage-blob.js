@@ -78,6 +78,36 @@ module.exports = testCase({
     }, 1000);
     
   },
+
+  blobPipeGetToPut: function (test) {
+
+    var c = storage.container(this.containerName);
+
+    // Without having to call test.*, this would be as simple as:
+    // c.get('blob.txt').pipe(c.put('blob2.txt'));
+
+    var s = c.put('blob2.txt');
+    s.on('end', function() {
+      var m1 = new MemoryStream(null, {readable: false});
+      var s1 = c.get('blob.txt');
+      s1.on("end", function() {
+        var m2 = new MemoryStream(null, {readable: false});
+        var s2 = c.get('blob2.txt');
+        s2.on("end", function() {
+          test.equals(m1.getAll(), m2.getAll());
+          test.done();
+        });
+        s2.pipe(m2);
+      });
+      s1.pipe(m1);
+    });
+    s.on('error', function(err) {
+      test.equals(err,null,"Stream emitted an error event.");
+      test.done();
+    });
+    c.get('blob.txt').pipe(s);
+
+  },
   
   removeContainer: function (test) {
     storage.removeContainer(this.containerName, function(err) {
