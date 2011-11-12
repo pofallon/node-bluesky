@@ -91,13 +91,15 @@ module.exports = testCase({
       var m1 = new MemoryStream(null, {readable: false});
       var s1 = c.get('blob.txt');
       s1.on("end", function() {
-        var m2 = new MemoryStream(null, {readable: false});
-        var s2 = c.get('blob2.txt');
-        s2.on("end", function() {
-          test.equals(m1.getAll(), m2.getAll());
-          test.done();
-        });
-        s2.pipe(m2);
+        setTimeout(function() {
+          var m2 = new MemoryStream(null, {readable: false});
+          var s2 = c.get('blob2.txt');
+          s2.on("end", function() {
+            test.equals(m1.getAll(), m2.getAll());
+            test.done();
+          });
+          s2.pipe(m2);
+        }, 1000);
       });
       s1.pipe(m1);
     });

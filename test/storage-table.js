@@ -28,8 +28,9 @@ module.exports = testCase({
     storage.createTable(theTable, function(err,table) {
       test.equals(err,null);
       test.notEqual(table,null);
-      if (!table) { table = {}; }
-      test.equals(table.name,theTable);
+      if (table) {
+        test.equals(table.name,theTable);
+      }
       test.done();
     });
   },
@@ -37,7 +38,11 @@ module.exports = testCase({
   createdTableInList: function (test) {
     var theTable = this.tableName;
     storage.listTables(function(err,tables) {
-      test.notStrictEqual(tables.indexOf(theTable),-1);
+      test.equals(err,null);
+      test.notEqual(tables,null);
+      if (tables) {
+      	test.notStrictEqual(tables.indexOf(theTable),-1);
+      }
       test.done();
     });
   },
@@ -56,21 +61,25 @@ module.exports = testCase({
 
     var t = storage.table(this.tableName);
     t.all(function(err, results) {
-      test.equals(results[0].PartitionKey,myPartition);
-      test.equals(results[0].RowKey,myRow);
+      test.equals(err,null);
+      test.notEqual(results,null);
+      if (results) {
+        test.equals(results[0].PartitionKey,myPartition);
+        test.equals(results[0].RowKey,myRow);
       
-      test.equals(typeof(results[0].one), 'string');
-      test.equals(results[0].one, 'uno');
+        test.equals(typeof(results[0].one), 'string');
+        test.equals(results[0].one, 'uno');
       
-      test.equals(typeof(results[0].two), 'number');
-      test.equals(results[0].two, 2);
+        test.equals(typeof(results[0].two), 'number');
+        test.equals(results[0].two, 2);
       
-      test.equals(typeof(results[0].three), 'boolean');
-      test.equals(results[0].three, true);
+        test.equals(typeof(results[0].three), 'boolean');
+        test.equals(results[0].three, true);
       
-      test.equals((results[0].four instanceof Date), true);
-      var d = new Date('2010-12-23T23:12:11.234Z');
-      test.deepEqual(results[0].four,d);
+        test.equals((results[0].four instanceof Date), true);
+        var d = new Date('2010-12-23T23:12:11.234Z');
+        test.deepEqual(results[0].four,d);
+      }
       
       test.done();
     });
