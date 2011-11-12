@@ -4,19 +4,27 @@ A node.js library for accessing the Windows Azure REST API's.
 ## Usage
 
 ```javascript
-var storage = require('azure').storage({account: 'account', key: 'key'});
+var s = require('azure').storage({account: 'account', key: 'key'});
 
-var t = storage.table(tableName);
-
-t.query({'user': 'joe', 'visits': 1, 'isPremium': true}).forEach(function(err, row) {
-  
-  console.log(row.user + ", " + row.visits + ", " + row.isPremium);
-  
-}, function(err, count) {
-  
-  console.log(count + " users matched your query");
-  
+// queues, with events
+var q = s.queue('happenings');
+q.on('message', function(m) {
+  console.log(m.body);
 });
+q.poll(10000);
+
+// blobs, as streams
+var c1 = s.container('new');
+var c2 = s.container('old');
+c1.get('readme.txt').pipe(c2.put('archive.txt'));
+
+// and tables, oh my! 
+var t = s.table('folks');
+t.filter({'user': 'joe', 'visits': 1, 'isPremium': true}).forEach(function(err, row) {
+  console.log(row.user + ', ' + row.visits + ', ' + row.isPremium);
+});
+
+// * Note that blob support is only preliminary and still needs work
 ```
 
 See the [tests](node-azure/tree/master/test) for additional examples
@@ -25,7 +33,7 @@ See the [tests](node-azure/tree/master/test) for additional examples
 
 The library can used with both Windows and non-Windows versions of node.js:
 
-![Tests](https://bit.ly/onBj8Q)
+![Tests](http://bitly.com/tv2uOx)
 
 ## Dependencies
 
@@ -34,15 +42,13 @@ This library depends on:
 * [mikeal/request](https://github.com/mikeal/request)
 * [felixge/node-dateformat](https://github.com/felixge/node-dateformat)
 * [isaacs/sax-js](https://github.com/isaacs/sax-js)
+* [JSBizon/memorystream](https://github.com/JSBizon/memorystream)
 * [caolan/nodeunit](https://github.com/caolan/nodeunit) (for unit tests)
-
 ## Install
 
 <pre>
   npm install azure
 </pre>
-
-On Windows, manually download the above dependencies and place them in node-azure/node_modules
 
 ## Table Storage API
 

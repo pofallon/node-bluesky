@@ -70,11 +70,18 @@ module.exports = testCase({
 
       var c = storage.container(that.containerName);
       var s = c.get('blob.txt');
-      s.on("end", function() {
-        test.equals(memStream.getAll(),'This is a text blob');
-        test.done();
-      });
-      s.pipe(memStream);
+      test.notEqual(s,null);
+      if (s) {
+        s.on("error", function(error) {
+          test.equals(error,null,"Stream emitted an error event.");
+          test.done();
+        });
+        s.on("end", function() {
+          test.equals(memStream.getAll(),'This is a text blob');
+          test.done();
+        });
+        s.pipe(memStream);
+      }
     }, 1000);
     
   },

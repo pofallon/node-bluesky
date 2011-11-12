@@ -142,15 +142,19 @@ module.exports = testCase({
     
     t.fields(['PartitionKey','RowKey']).all(function(err,rows) {
       test.equals(err,null);
-      test.equals(rows[0].PartitionKey,thePartitionKey);
-      test.equals(rows[0].RowKey.theRowKey);
-      test.equals(rows[0].one,null);
-      // Make sure full field list is present in subsequent invocations
-      t.all(function(err,r2) {
-        test.equals(err,null);
-        test.equals(r2[0].one,'uno');
-        test.done();
-      });
+      test.notEqual(rows,null);
+      test.notEqual(rows.length,0);
+      if (rows.length > 0) {
+        test.equals(rows[0].PartitionKey,thePartitionKey);
+        test.equals(rows[0].RowKey.theRowKey);
+        test.equals(rows[0].one,null);
+        // Make sure full field list is present in subsequent invocations
+        t.all(function(err,r2) {
+          test.equals(err,null);
+          test.equals(r2[0].one,'uno');
+          test.done();
+        });
+      }
     });
   },
     
