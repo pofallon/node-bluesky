@@ -27,7 +27,7 @@ t.filter({'user': 'joe', 'visits': 1, 'isPremium': true}).forEach(function(err, 
 // * Note that blob support is only preliminary and still needs work
 ```
 
-See the [tests](node-azure/tree/master/test) for additional examples, and the [wiki](node-azure/wiki/API) for API documentation
+See the [tests](node-azure/tree/master/test) for additional examples, and the [wiki](node-azure/wiki) for API documentation and a Road Map.
 
 ## Install
 
