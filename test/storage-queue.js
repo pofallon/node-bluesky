@@ -100,6 +100,6 @@ module.exports = testCase({
       test.strictEqual(queues.indexOf(theQueue),-1);
       test.done();
     });
-  },
+  }
   
 });

@@ -41,7 +41,7 @@ module.exports = testCase({
       test.equals(err,null);
       test.notEqual(tables,null);
       if (tables) {
-      	test.notStrictEqual(tables.indexOf(theTable),-1);
+        test.notStrictEqual(tables.indexOf(theTable),-1);
       }
       test.done();
     });
@@ -202,6 +202,6 @@ module.exports = testCase({
       test.strictEqual(tables.indexOf(theTable),-1);
       test.done();
     });
-  },
+  }
 
 });

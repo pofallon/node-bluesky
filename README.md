@@ -31,7 +31,7 @@ See the [tests](node-azure/tree/master/test) for additional examples, and the [w
 
 ## Platform Support
 
-The library can used with both Windows and non-Windows versions of node.js:
+The library can used with both Windows and non-Windows versions of node.js
 
 ## Dependencies
 

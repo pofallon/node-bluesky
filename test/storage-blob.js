@@ -132,6 +132,6 @@ module.exports = testCase({
       test.strictEqual(containers.indexOf(theContainer),-1);
       test.done();
     });
-  },
+  }
   
 });
