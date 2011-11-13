@@ -29,6 +29,12 @@ t.filter({'user': 'joe', 'visits': 1, 'isPremium': true}).forEach(function(err, 
 
 See the [tests](node-azure/tree/master/test) for additional examples, and the [wiki](node-azure/wiki/API) for API documentation
 
+## Install
+
+<pre>
+  npm install azure
+</pre>
+
 ## Platform Support
 
 The library can used with both Windows and non-Windows versions of node.js
@@ -42,12 +48,6 @@ This library depends on:
 * [isaacs/sax-js](https://github.com/isaacs/sax-js)
 * [JSBizon/memorystream](https://github.com/JSBizon/memorystream)
 * [caolan/nodeunit](https://github.com/caolan/nodeunit) (for unit tests)
-
-## Install
-
-<pre>
-  npm install azure
-</pre>
 
 ## Special Thanks
 

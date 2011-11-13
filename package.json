@@ -5,16 +5,16 @@
   "author": "Paul O'Fallon <paul@ofallonfamily.com>",
   "homepage": "https://github.com/pofallon/node-azure",
   "dependencies": {
-    "request": "x.x.x",
-    "dateformat": "x.x.x",
-    "sax": "x.x.x",
-    "memorystream": "x.x.x"
+    "request": "2.2.x",
+    "dateformat": "1.0.x",
+    "sax": "0.3.x",
+    "memorystream": "0.0.x"
   },
   "devDependencies": {
-    "nodeunit": "x.x.x"
+    "nodeunit": "0.5.x"
   },
   "engine": "node >= 0.4.1",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "files": [
     "index.js",
     "lib",
