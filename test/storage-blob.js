@@ -90,9 +90,6 @@ module.exports = testCase({
 
     var c = storage.container(this.containerName);
 
-    // Without having to call test.*, this would be as simple as:
-    // c.get('blob.txt').pipe(c.put('blob2.txt'));
-
     var s = c.put('blob2.txt');
     s.on('end', function() {
       var m1 = new MemoryStream(null, {readable: false});

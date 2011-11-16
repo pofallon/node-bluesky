@@ -27,8 +27,9 @@ module.exports = testCase({
     storage.createQueue(theQueue, function(err,queue) {
       test.equals(err,null);
       test.notEqual(queue,null);
-      if (!queue) { queue = {}; }
-      test.equals(queue.name,theQueue);
+      if (queue) { 
+        test.equals(queue.name,theQueue);
+      }
       test.done();
     });
   },
@@ -63,10 +64,12 @@ module.exports = testCase({
     queue.get(function(err, message) {
       test.equals(err,null);
       test.equals(message.body,'Queue Test Message');
-      queue.del(message.id, message.popReceipt, function(err) {
-        test.equals(err,null);
-        test.done();
-      });
+      setTimeout(function() {
+        queue.del(message.id, message.popReceipt, function(err) {
+          test.equals(err,null);
+          test.done();
+        });
+      },500);
     });
   }, 
 
