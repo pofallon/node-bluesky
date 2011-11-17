@@ -1,9 +1,9 @@
 {
-  "name": "azure",
+  "name": "bluesky",
   "description": "A node.js library for accessing Azure REST-based services",
-  "keywords": ["azure"],
+  "keywords": ["azure", "cloud", "paas"],
   "author": "Paul O'Fallon <paul@ofallonfamily.com>",
-  "homepage": "https://github.com/pofallon/node-azure",
+  "homepage": "https://github.com/pofallon/node-bluesky",
   "dependencies": {
     "request": "2.2.x",
     "dateformat": "1.0.x",

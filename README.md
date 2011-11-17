@@ -1,10 +1,10 @@
-# node-azure
+# node-bluesky
 A node.js library for accessing the Windows Azure REST API's.
 
 ## Usage
 
 ```javascript
-var s = require('azure').storage({account: 'account', key: 'key'});
+var s = require('bluesky').storage({account: 'account', key: 'key'});
 
 // queues, with events
 var q = s.queue('happenings');
@@ -27,12 +27,12 @@ t.filter({'user': 'joe', 'visits': 1, 'isPremium': true}).forEach(function(err, 
 // * Note that blob support is only preliminary and still needs work
 ```
 
-See the [tests](node-azure/tree/master/test) for additional examples, and the [wiki](node-azure/wiki) for API documentation and a Road Map.
+See the [tests](node-bluesky/tree/master/test) for additional examples, and the [wiki](node-bluesky/wiki) for API documentation and a Road Map.
 
 ## Install
 
 <pre>
-  npm install azure
+  npm install bluesky
 </pre>
 
 ## Platform Support
@@ -51,7 +51,7 @@ This library depends on:
 
 ## Special Thanks
 
-…to Cerebrata for [Cloud Storage Studio](http://www.cerebrata.com/products/cloudstoragestudio/) - an indispensible tool (along with [fiddler2](http://www.fiddler2.com/fiddler2/)) in the node-azure debugging process!
+…to Cerebrata for [Cloud Storage Studio](http://www.cerebrata.com/products/cloudstoragestudio/) - an indispensible tool (along with [fiddler2](http://www.fiddler2.com/fiddler2/)) in the node-bluesky debugging process!
 
 ## TODO
 
