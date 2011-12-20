@@ -1,5 +1,5 @@
 # node-bluesky
-A node.js library for accessing the Windows Azure REST API's.
+A lightweight, high-performance node.js library for accessing Windows Azure
 
 ## Usage
 
