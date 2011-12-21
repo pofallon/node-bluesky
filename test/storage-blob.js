@@ -69,19 +69,20 @@ module.exports = testCase({
       var memStream = new MemoryStream(null, {readable: false});
 
       var c = storage.container(that.containerName);
-      var s = c.get('blob.txt');
-      test.notEqual(s,null);
-      if (s) {
-        s.on("error", function(error) {
-          test.equals(error,null,"Stream emitted an error event.");
-          test.done();
-        });
-        s.on("end", function() {
-          test.equals(memStream.getAll(),'This is a text blob');
-          test.done();
-        });
-        s.pipe(memStream);
-      }
+      c.get('blob.txt', function(s) {
+        test.notEqual(s,null);
+        if (s) {
+          s.on("error", function(error) {
+            test.equals(error,null,"Stream emitted an error event.");
+            test.done();
+          });
+          s.on("end", function() {
+            test.equals(memStream.getAll(),'This is a text blob');
+            test.done();
+          });
+          s.pipe(memStream);
+        }
+      });
     }, 1000);
     
   },
@@ -93,25 +94,29 @@ module.exports = testCase({
     var s = c.put('blob2.txt');
     s.on('end', function() {
       var m1 = new MemoryStream(null, {readable: false});
-      var s1 = c.get('blob.txt');
-      s1.on("end", function() {
-        setTimeout(function() {
-          var m2 = new MemoryStream(null, {readable: false});
-          var s2 = c.get('blob2.txt');
-          s2.on("end", function() {
-            test.equals(m1.getAll(), m2.getAll());
-            test.done();
-          });
-          s2.pipe(m2);
-        }, 1000);
+      c.get('blob.txt', function(s1) {
+        s1.on("end", function() {
+          setTimeout(function() {
+            var m2 = new MemoryStream(null, {readable: false});
+            c.get('blob2.txt', function(s2) {
+              s2.on("end", function() {
+                test.equals(m1.getAll(), m2.getAll());
+                test.done();
+              });
+              s2.pipe(m2);
+            });
+          }, 1000);
+        });
+        s1.pipe(m1);
       });
-      s1.pipe(m1);
     });
     s.on('error', function(err) {
       test.equals(err,null,"Stream emitted an error event.");
       test.done();
     });
-    c.get('blob.txt').pipe(s);
+    c.get('blob.txt', function(b) {
+      b.pipe(s);
+    });
 
   },
   
