@@ -69,7 +69,8 @@ module.exports = testCase({
       var memStream = new MemoryStream(null, {readable: false});
 
       var c = storage.container(that.containerName);
-      c.get('blob.txt', function(s) {
+      c.get('blob.txt', function(err,s) {
+        test.equals(err,null);
         test.notEqual(s,null);
         if (s) {
           s.on("error", function(error) {
@@ -94,11 +95,15 @@ module.exports = testCase({
     var s = c.put('blob2.txt');
     s.on('end', function() {
       var m1 = new MemoryStream(null, {readable: false});
-      c.get('blob.txt', function(s1) {
+      c.get('blob.txt', function(err,s1) {
+        test.equals(err,null);
+        test.notEqual(s1,null);
         s1.on("end", function() {
           setTimeout(function() {
             var m2 = new MemoryStream(null, {readable: false});
-            c.get('blob2.txt', function(s2) {
+            c.get('blob2.txt', function(err,s2) {
+              test.equals(err,null);
+              test.notEqual(s2,null);
               s2.on("end", function() {
                 test.equals(m1.getAll(), m2.getAll());
                 test.done();
@@ -114,7 +119,9 @@ module.exports = testCase({
       test.equals(err,null,"Stream emitted an error event.");
       test.done();
     });
-    c.get('blob.txt', function(b) {
+    c.get('blob.txt', function(err,b) {
+      test.equals(err,null);
+      test.notEqual(b,null);
       b.pipe(s);
     });
 
