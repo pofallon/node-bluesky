@@ -46,7 +46,7 @@ module.exports = testCase({
     var c = storage.container(this.containerName);
     var memStream = new MemoryStream();
     var s = c.put('blob.txt');
-    s.on('end', function() {
+    s.on('close', function() {
       test.done();
     });
     s.on('error', function(err) {
@@ -93,7 +93,7 @@ module.exports = testCase({
     var c = storage.container(this.containerName);
 
     var s = c.put('blob2.txt');
-    s.on('end', function() {
+    s.on('close', function() {
       var m1 = new MemoryStream(null, {readable: false});
       c.get('blob.txt', function(err,s1) {
         test.equals(err,null);
@@ -116,7 +116,7 @@ module.exports = testCase({
       });
     });
     s.on('error', function(err) {
-      test.equals(err,null,"Stream emitted an error event.");
+      test.equals(err,null,'writeStream emitted an error:' + err.message);
       test.done();
     });
     c.get('blob.txt', function(err,b) {
@@ -126,7 +126,46 @@ module.exports = testCase({
     });
 
   },
+
+  blobPutSmallImage: function(test) {
+    
+    var c = storage.container(this.containerName);
+    var imageStream = fs.createReadStream('test/node.png');
+    var s = c.put('node.png');
+    
+    s.on('end', function() {
+      test.done();
+    });
+
+    s.on('error', function(err) {
+      test.equals(err,null,'writeStream emitted an error:' + err.message);
+      test.done();
+    });
+
+    imageStream.pipe(s);
   
+  },
+
+  blobPutLargeFile: function(test) {
+    
+    var c = storage.container(this.containerName);
+    var largeFileStream = fs.createReadStream('test/kjv12.txt');
+    var s = c.put('kjv12.txt');
+
+    s.on('end', function() {
+      test.done();
+    });
+    
+    s.on('error', function(err) {
+      test.equals(err,null,'writeStream emitted an error: ' + err.message);
+      test.done();
+    });
+
+    largeFileStream.pipe(s);
+
+  },
+    
+  /* 
   removeContainer: function (test) {
     storage.removeContainer(this.containerName, function(err) {
       test.equals(err,null);
@@ -142,5 +181,6 @@ module.exports = testCase({
       test.done();
     });
   }
+  */
   
 });
