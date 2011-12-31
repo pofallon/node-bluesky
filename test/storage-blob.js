@@ -165,7 +165,6 @@ module.exports = testCase({
 
   },
     
-  /* 
   removeContainer: function (test) {
     storage.removeContainer(this.containerName, function(err) {
       test.equals(err,null);
@@ -181,6 +180,5 @@ module.exports = testCase({
       test.done();
     });
   }
-  */
   
 });
