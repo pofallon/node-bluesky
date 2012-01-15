@@ -5,13 +5,17 @@
   "author": "Paul O'Fallon <paul@ofallonfamily.com>",
   "homepage": "https://github.com/pofallon/node-bluesky",
   "dependencies": {
-    "request": "2.2.x",
-    "dateformat": "1.0.x",
-    "sax": "0.3.x",
-    "memorystream": "0.0.x"
+    "request": "2.x.x",
+    "dateformat": "1.x.x",
+    "sax": "0.x.x",
+    "mime": "1.x.x",
+    "node-uuid": "1.x.x",
+    "underscore": "1.x.x"
   },
   "devDependencies": {
-    "nodeunit": "0.5.x"
+    "nodeunit": "0.5.x",
+    "memorystream" : "0.0.x",
+    "loremipstream" : "0.0.x"
   },
   "engine": "node >= 0.4.1",
   "version": "0.3.0",

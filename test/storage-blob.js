@@ -6,6 +6,8 @@
 
 var fs = require('fs');
 var MemoryStream = require('memorystream');
+var LoremIpStream = require('loremipstream');
+
 var testCase = require('nodeunit').testCase;
 
 var path = process.env.HOME || (process.env.HOMEDRIVE + process.env.HOMEPATH);
@@ -127,7 +129,7 @@ module.exports = testCase({
 
   },
 
-  blobPutSmallImage: function(test) {
+  /* blobPutSmallImage: function(test) {
     
     var c = storage.container(this.containerName);
     var imageStream = fs.createReadStream('test/node.png');
@@ -144,13 +146,14 @@ module.exports = testCase({
 
     imageStream.pipe(s);
   
-  },
+  }, */
 
-  blobPutLargeFile: function(test) {
+  blobPutLargeStream: function(test) {
     
     var c = storage.container(this.containerName);
-    var largeFileStream = fs.createReadStream('test/kjv12.txt');
-    var s = c.put('kjv12.txt');
+    //var largeFileStream = fs.createReadStream('test/kjv12.txt');
+    var lorem = new LoremIpStream(100*1024*1024);
+    var s = c.put('lorem.txt');
 
     s.on('end', function() {
       test.done();
@@ -161,7 +164,7 @@ module.exports = testCase({
       test.done();
     });
 
-    largeFileStream.pipe(s);
+    lorem.pipe(s);
 
   },
     
