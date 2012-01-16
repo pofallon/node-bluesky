@@ -4,6 +4,13 @@
   "keywords": ["azure", "cloud", "paas"],
   "author": "Paul O'Fallon <paul@ofallonfamily.com>",
   "homepage": "https://github.com/pofallon/node-bluesky",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pofallon/node-loremipstream.git"
+  },
+  "scripts": {
+    "test": "nodeunit test"
+  },
   "dependencies": {
     "request": "2.x.x",
     "dateformat": "1.x.x",
@@ -17,8 +24,8 @@
     "memorystream" : "0.0.x",
     "loremipstream" : "0.0.x"
   },
-  "engine": "node >= 0.4.1",
-  "version": "0.3.0",
+  "engine": "node >= 0.6.0",
+  "version": "0.4.0",
   "files": [
     "index.js",
     "lib",
@@ -26,5 +33,6 @@
     "README.md",
     "test"
   ],
-  "main": "index"
+  "main": "index",
+  "license": "MIT"
 }

@@ -152,7 +152,7 @@ module.exports = testCase({
     
     var c = storage.container(this.containerName);
     //var largeFileStream = fs.createReadStream('test/kjv12.txt');
-    var lorem = new LoremIpStream(100*1024*1024);
+    var lorem = new LoremIpStream({size: 1024*1024, dataInterval: 2});
     var s = c.put('lorem.txt');
 
     s.on('end', function() {
