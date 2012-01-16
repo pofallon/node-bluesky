@@ -43,11 +43,18 @@ The library can used with both Windows and non-Windows versions of node.js
 
 This library depends on:
 
-* [mikeal/request](https://github.com/mikeal/request)
-* [felixge/node-dateformat](https://github.com/felixge/node-dateformat)
-* [isaacs/sax-js](https://github.com/isaacs/sax-js)
-* [JSBizon/memorystream](https://github.com/JSBizon/memorystream)
-* [caolan/nodeunit](https://github.com/caolan/nodeunit) (for unit tests)
+* [bentomas/node-mime](/bentomas/node-mime)
+* [broofa/node-uuid](/broofa/node-uuid)
+* [documentcloud/underscore](/documentcloud/underscore)
+* [felixge/node-dateformat](/felixge/node-dateformat)
+* [isaacs/sax-js](/isaacs/sax-js)
+* [mikeal/request](/mikeal/request)
+
+... and for unit tests:
+
+* [caolan/nodeunit](/caolan/nodeunit)
+* [JSBizon/memorystream](/JSBizon/memorystream)
+* [pofallon/loremipstream](/pofallon/loremipstream)
 
 ## Special Thanks
 
