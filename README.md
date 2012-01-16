@@ -41,33 +41,20 @@ The library can used with both Windows and non-Windows versions of node.js
 
 ## Dependencies
 
-<table>
-  <tr><th>Production</th><th>Testing only</th></tr>
-  <tr>
-    <td>[bentomas/node-mime](/bentomas/node-mime)</td>
-    <td>[caolan/nodeunit](/caolan/nodeunit)</td>
-  </tr>
-  <tr>
-    <td>[broofa/node-uuid](/broofa/node-uuid)</td>
-    <td>[JSBizon/memorystream](/JSBizon/memorystream)</td>
-  </tr>
-  <tr>
-    <td>[documentcloud/underscore](/documentcloud/underscore)</td>
-    <td>[pofallon/loremipstream](/pofallon/loremipstream)</td>
-  </tr>
-  <tr>
-    <td>[felixge/node-dateformat](/felixge/node-dateformat)</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>[isaacs/sax-js](/isaacs/sax-js)</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>[mikeal/request](/mikeal/request)</td>
-    <td></td>
-  </tr>
-</table>
+This library depends on:
+
+* [bentomas/node-mime](/bentomas/node-mime)
+* [broofa/node-uuid](/broofa/node-uuid)
+* [documentcloud/underscore](/documentcloud/underscore)
+* [felixge/node-dateformat](/felixge/node-dateformat)
+* [isaacs/sax-js](/isaacs/sax-js)
+* [mikeal/request](/mikeal/request)
+
+... and for unit tests:
+
+* [caolan/nodeunit](/caolan/nodeunit)
+* [JSBizon/memorystream](/JSBizon/memorystream)
+* [pofallon/loremipstream](/pofallon/loremipstream)
 
 ## Special Thanks
 
