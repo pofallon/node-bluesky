@@ -16,7 +16,9 @@ q.poll(10000);
 // blobs, as streams
 var c1 = s.container('new');
 var c2 = s.container('old');
-c1.get('readme.txt').pipe(c2.put('archive.txt'));
+c1.get('readme.txt', function(err, readme) {
+	readme.pipe(c2.put('archive.txt'));
+});
 
 // and tables, oh my! 
 var t = s.table('folks');
@@ -24,7 +26,6 @@ t.filter({'user': 'joe', 'visits': 1, 'isPremium': true}).forEach(function(err, 
   console.log(row.user + ', ' + row.visits + ', ' + row.isPremium);
 });
 
-// * Note that blob support is only preliminary and still needs work
 ```
 
 See the [tests](node-bluesky/tree/master/test) for additional examples, and the [wiki](node-bluesky/wiki) for API documentation and a Road Map.
