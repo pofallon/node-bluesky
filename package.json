@@ -6,7 +6,7 @@
   "homepage": "https://github.com/pofallon/node-bluesky",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pofallon/node-loremipstream.git"
+    "url": "https://github.com/pofallon/node-bluesky.git"
   },
   "scripts": {
     "test": "nodeunit test"
