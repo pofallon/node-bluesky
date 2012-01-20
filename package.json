@@ -20,7 +20,7 @@
     "underscore": "1.x.x"
   },
   "devDependencies": {
-    "nodeunit": "0.5.x",
+    "nodeunit": "0.x.x",
     "memorystream" : "0.0.x",
     "loremipstream" : "0.0.x"
   },
