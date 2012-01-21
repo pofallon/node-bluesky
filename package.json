@@ -12,12 +12,10 @@
     "test": "nodeunit test"
   },
   "dependencies": {
-    "request": "2.x.x",
-    "dateformat": "1.x.x",
-    "sax": "0.x.x",
     "mime": "1.x.x",
     "node-uuid": "1.x.x",
     "underscore": "1.x.x"
+    "azure": "0.x.x"
   },
   "devDependencies": {
     "nodeunit": "0.x.x",
