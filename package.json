@@ -14,7 +14,7 @@
   "dependencies": {
     "mime": "1.x.x",
     "node-uuid": "1.x.x",
-    "underscore": "1.x.x"
+    "underscore": "1.x.x",
     "azure": "0.x.x"
   },
   "devDependencies": {

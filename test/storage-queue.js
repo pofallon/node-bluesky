@@ -38,7 +38,10 @@ module.exports = testCase({
     var theQueue = this.queueName;
     storage.listQueues(function(err,queues) {
       test.equals(err,null);
-      test.notStrictEqual(queues.indexOf(theQueue),-1);
+      test.notEqual(queues,null);
+      if (queues) {
+        test.notStrictEqual(queues.indexOf(theQueue),-1);
+      }
       test.done();
     });
   },
@@ -55,6 +58,7 @@ module.exports = testCase({
     var queue = storage.queue(this.queueName);
     queue.peek(function(err, message) {
       test.equals(err,null);
+      test.equals(message.messagetext, 'Queue Test Message');
       test.done();
     });
   },
@@ -63,9 +67,9 @@ module.exports = testCase({
     var queue = storage.queue(this.queueName);
     queue.get(function(err, message) {
       test.equals(err,null);
-      test.equals(message.body,'Queue Test Message');
+      test.equals(message.messagetext,'Queue Test Message');
       setTimeout(function() {
-        queue.del(message.id, message.popReceipt, function(err) {
+        queue.del(message.messageid, message.popreceipt, function(err) {
           test.equals(err,null);
           test.done();
         });
@@ -77,8 +81,8 @@ module.exports = testCase({
     var queue = storage.queue(this.queueName);
     queue.on('message', function(m) {
       queue.poll(false);
-      test.equals(m.body,'Queue Poll Message');
-      queue.del(m.id, m.popReceipt, function(err) {
+      test.equals(m.messagetext,'Queue Poll Message');
+      queue.del(m.messageid, m.popreceipt, function(err) {
         test.equals(err,null);
         test.done();
       });
@@ -100,7 +104,10 @@ module.exports = testCase({
     var theQueue = this.queueName;
     storage.listQueues(function(err,queues) {
       test.equals(err,null);
-      test.strictEqual(queues.indexOf(theQueue),-1);
+      test.notEqual(queues,null);
+      if (queues) {
+        test.strictEqual(queues.indexOf(theQueue),-1);
+      }
       test.done();
     });
   }
