@@ -60,7 +60,8 @@ module.exports = testCase({
     var myRow = this.rowKey;
 
     var t = storage.table(this.tableName);
-    t.all(function(err, results) {
+
+    t.rows(function(err, results) {
       test.equals(err,null);
       test.notEqual(results,null);
       if (results) {
@@ -92,21 +93,27 @@ module.exports = testCase({
     var t = storage.table(this.tableName);
     
     t.insert(this.partitionKey,'foo2',{'one':'unouno', 'two':4, 'three':false, 'four': new Date() }, function(err) {
-      test.equals(err,null,"Second table row insert failed");
-      t.all(function(err,r) {
+      test.equals(err,null);
+      t.rows(function(err,r) {
+        test.equals(err,null);
         test.equals(r.length,2,"Second table row not returned in results");
-        t.filter({'one':'uno','two': 2, 'three': true}).all(function(err, results) {
+        t.filter({'one':'uno', 'two': 2, 'three': true}).rows(function(err, results) {
           test.equals(err,null);
-          test.equals(results.length,1);
-          test.equals(results[0].PartitionKey,myPartition);
-          test.equals(results[0].RowKey,myRow);
-          test.equals(results[0].one,'uno');
-          // Now make sure filter is gone for subsequent requests
-          t.all(function(err,r2) {
-            test.equals(err,null);
-            test.equals(r2.length,2);
+          test.notEqual(results,null);
+          if (results) {
+            test.equals(results.length,1);
+            test.equals(results[0].PartitionKey,myPartition);
+            test.equals(results[0].RowKey,myRow);
+            test.equals(results[0].one,'uno');
+            // Now make sure filter is gone for subsequent requests
+            t.rows(function(err,r2) {
+              test.equals(err,null);
+              test.equals(r2.length,2);
+              test.done();
+            });
+          } else {
             test.done();
-          });
+          }
         });
       });
     });
@@ -120,17 +127,18 @@ module.exports = testCase({
     
     var manualCount = 0;
     
-    t.forEach(function(err, row) {
+    t.rows(function(err, row) {
       manualCount++;
     }, function(err, count) {
       test.equals(count,manualCount);
       var secondCount = 0;
-      t.forEach(function(err, row) {
+      t.rows(function(err, row) {
         if (count == ++secondCount) {
           test.done();
         }
-      });
+      }, true);
     });
+
   },
   
   tableFieldsAll: function(test) {
@@ -140,7 +148,7 @@ module.exports = testCase({
     var thePartitionKey = this.partitionKey;
     var theRowKey = this.rowKey;
     
-    t.fields(['PartitionKey','RowKey']).all(function(err,rows) {
+    t.select('PartitionKey','RowKey').rows(function(err,rows) {
       test.equals(err,null);
       test.notEqual(rows,null);
       test.notEqual(rows.length,0);
@@ -149,7 +157,7 @@ module.exports = testCase({
         test.equals(rows[0].RowKey.theRowKey);
         test.equals(rows[0].one,null);
         // Make sure full field list is present in subsequent invocations
-        t.all(function(err,r2) {
+        t.rows(function(err,r2) {
           test.equals(err,null);
           test.equals(r2[0].one,'uno');
           test.done();
@@ -157,13 +165,12 @@ module.exports = testCase({
       }
     });
   },
-    
   
   tableUpdateRow: function (test) {
     var t = storage.table(this.tableName);
     t.update(this.partitionKey,this.rowKey,{'one':'eleven', 'two': 22, 'three': true, 'four': new Date('2010-12-23T23:12:11.234Z') }, function(err) {
       test.equals(err,null);
-      t.all(function(err,rows) {
+      t.rows(function(err,rows) {
         test.equals(rows[0].one,'eleven');
         test.done();
       });
@@ -174,7 +181,7 @@ module.exports = testCase({
     var t = storage.table(this.tableName);
     t.update(this.partitionKey,"upsertRow",{'one':'1111', 'two':222, 'three': false }, {upsert: true}, function(err) {
       test.equals(err,null);
-      t.forEach(null,function(err,count) {
+      t.rows(null,function(err,count) {
         test.equals(count,3);
         test.done();
       });
