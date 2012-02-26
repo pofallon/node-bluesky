@@ -90,7 +90,7 @@ module.exports = testCase({
     
   },
 
-  blobPipeGetToPut: function (test) {
+  /* blobPipeGetToPut: function (test) {
 
     var c = storage.container(this.containerName);
 
@@ -127,7 +127,7 @@ module.exports = testCase({
       b.pipe(s);
     });
 
-  },
+  }, */
 
   /* blobPutSmallImage: function(test) {
     
@@ -148,7 +148,7 @@ module.exports = testCase({
   
   }, */
 
-  blobPutLargeStream: function(test) {
+  /* blobPutLargeStream: function(test) {
     
     var c = storage.container(this.containerName);
     var lorem = new LoremIpStream(750*1024);
@@ -165,7 +165,7 @@ module.exports = testCase({
 
     lorem.pipe(s);
 
-  },
+  }, */
     
   removeContainer: function (test) {
     storage.removeContainer(this.containerName, function(err) {
