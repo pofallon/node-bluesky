@@ -90,7 +90,7 @@ module.exports = testCase({
     
   },
 
-  /* blobPipeGetToPut: function (test) {
+  blobPipeGetToPut: function (test) {
 
     var c = storage.container(this.containerName);
 
@@ -127,13 +127,14 @@ module.exports = testCase({
       b.pipe(s);
     });
 
-  }, */
+  },
 
   /* blobPutSmallImage: function(test) {
     
     var c = storage.container(this.containerName);
     var imageStream = fs.createReadStream('test/node.png');
     var s = c.put('node.png');
+    s.metadata.foo = "bar";
     
     s.on('end', function() {
       test.done();
@@ -148,11 +149,12 @@ module.exports = testCase({
   
   }, */
 
-  /* blobPutLargeStream: function(test) {
+  blobPutLargeStream: function(test) {
     
     var c = storage.container(this.containerName);
     var lorem = new LoremIpStream(750*1024);
     var s = c.put('lorem.txt');
+    s.metadata.bar = "foo";
 
     s.on('end', function() {
       test.done();
@@ -165,8 +167,8 @@ module.exports = testCase({
 
     lorem.pipe(s);
 
-  }, */
-    
+  },
+
   removeContainer: function (test) {
     storage.removeContainer(this.containerName, function(err) {
       test.equals(err,null);
