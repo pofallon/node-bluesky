@@ -44,6 +44,34 @@ module.exports = testCase({
     });
   },
 
+  getContainerByPrefix: function (test) {
+    storage.createContainer("barblob", function(err, container) {
+      storage.listContainers("bar", function(err,containers) {
+        test.equals(err,null);
+        test.notEqual(containers,null);
+        if (containers) {
+          test.strictEqual(containers.length,1);
+          test.strictEqual(containers[0],"barblob");
+        }
+        test.done();
+      });
+    });
+  },
+
+  listContainersAsEmitter: function (test) {
+    var count = 0;
+    var e = storage.listContainers();
+    e.on('data', function(container) {
+      test.notEqual(container,null);
+      count++;
+    });
+    e.on('end', function(c) {
+      test.notEqual(c,null);
+      test.strictEqual(count,c);
+      test.done();
+    });
+  },
+
   blobPut: function (test) {
     var c = storage.container(this.containerName);
     var memStream = new MemoryStream();
@@ -169,10 +197,45 @@ module.exports = testCase({
 
   },
 
+  listBlobs: function(test) {
+
+    var c = storage.container(this.containerName);
+    c.list(function(err,blobs) {
+      test.equals(err,null);
+      test.notEqual(blobs,null);
+      // Should have blob.txt, blob2.txt and lorem.txt
+      // If you uncomment the small image test, you'll need to make this '4'
+      test.strictEqual(blobs.length,3);
+      test.notStrictEqual(blobs.indexOf('blob.txt'),-1);
+      test.done();
+    });
+
+  },
+
+  listPrefixBlobsAsEmitter: function(test) {
+
+    var counter = 0;
+
+    var c = storage.container(this.containerName);
+    var e = c.list('lorem');
+    e.on('data', function(blob) {
+      test.notEqual(blob,null);
+      counter++;
+    });
+    e.on('end', function(c) {
+      test.strictEqual(counter,c);
+      test.strictEqual(c,1);
+      test.done();
+    });
+
+  },
+
   removeContainer: function (test) {
     storage.removeContainer(this.containerName, function(err) {
       test.equals(err,null);
-      test.done();
+      storage.removeContainer('barblob', function(err) {
+        test.done();
+      });
     });
   },
   
