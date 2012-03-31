@@ -230,6 +230,17 @@ module.exports = testCase({
 
   },
 
+  deleteBlob: function(test) {
+    var c = storage.container(this.containerName);
+    c.del('lorem.txt', function(err) {
+      test.equals(err,null);
+      c.list().on('end', function(count) {
+        test.strictEqual(count,2);
+        test.done();
+      });
+    });
+  },
+
   removeContainer: function (test) {
     storage.removeContainer(this.containerName, function(err) {
       test.equals(err,null);
