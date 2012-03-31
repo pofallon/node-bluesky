@@ -47,6 +47,34 @@ module.exports = testCase({
     });
   },
 
+  getTableByPrefix: function (test) {
+    storage.createTable('barfoo', function(err,table) {
+      storage.listTables('bar', function(err, tables) {
+        test.equals(err,null);
+        test.notEqual(tables,null);
+        if (tables) {
+          test.strictEqual(tables.length,1);
+          test.strictEqual(tables[0],'barfoo');
+          test.done();
+        }
+      });
+    });
+  },
+
+  listTablesAsEmitter: function(test) {
+    var count = 0;
+    var e = storage.listTables();
+    e.on('data', function(table) {
+      test.notEqual(table,null);
+      count++;
+    });
+    e.on('end', function(c) {
+      test.notEqual(c,null);
+      test.strictEqual(count,c);
+      test.done();
+    });
+  },
+
   tableInsertRow: function (test) {
     var t = storage.table(this.tableName);
     t.insert(this.partitionKey,this.rowKey,{'one':'uno', 'two': 2, 'three': true, 'four': new Date('2010-12-23T23:12:11.234Z') }, function(err) {
@@ -119,26 +147,27 @@ module.exports = testCase({
     });
   },
   
-  tableNoFilterForEach: function(test) {
+  tableNoFilterEmitter: function(test) {
     var myPartition = this.partitionKey;
     var myRow = this.rowKey;
     
     var t = storage.table(this.tableName);
     
-    var manualCount = 0;
-    
-    t.rows(function(err, row) {
-      manualCount++;
-    }, function(err, count) {
-      test.equals(count,manualCount);
-      var secondCount = 0;
-      t.rows(function(err, row) {
-        if (count == ++secondCount) {
-          test.done();
-        }
-      }, true);
-    });
+    var count = 0;
 
+    var e = t.rows();
+    e.on('data', function(row) {
+      count++;
+    });
+    e.on('end', function(c) {
+      test.notEqual(c,null);
+      test.equals(c,count);
+      test.done();
+    });
+    e.on('error', function(err) {
+      test.equals(err,null);
+    });
+    
   },
   
   tableFieldsAll: function(test) {
@@ -181,7 +210,7 @@ module.exports = testCase({
     var t = storage.table(this.tableName);
     t.update(this.partitionKey,"upsertRow",{'one':'1111', 'two':222, 'three': false }, {upsert: true}, function(err) {
       test.equals(err,null);
-      t.rows(null,function(err,count) {
+      t.rows().on('end', function(count) {
         test.equals(count,3);
         test.done();
       });
@@ -198,8 +227,10 @@ module.exports = testCase({
 
   removeTable: function (test) {
     storage.removeTable(this.tableName, function(err) {
-      test.equals(err,null);
-      test.done();
+      storage.removeTable('barfoo', function(err) {
+        test.equals(err,null);
+        test.done();
+      })
     });
   },
 
