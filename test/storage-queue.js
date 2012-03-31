@@ -125,7 +125,9 @@ module.exports = testCase({
   removeQueue: function (test) {
     storage.removeQueue(this.queueName, function(err) {
       test.equals(err,null);
-      test.done();
+      storage.removeQueue('barqueue', function(err) {
+        test.done();
+      });
     });
   },
   
