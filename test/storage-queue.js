@@ -46,6 +46,35 @@ module.exports = testCase({
     });
   },
 
+  getQueueByPrefix: function (test) {
+    storage.createQueue("barqueue", function(err, queue) {
+      storage.listQueues("bar", function(err,queues) {
+        test.equals(err,null);
+        test.notEqual(queues,null);
+        if (queues) {
+          test.strictEqual(queues.length,1);
+          test.strictEqual(queues[0],"barqueue");
+        }
+        test.done();
+      });
+    });
+  },
+
+  listQueuesAsEmitter: function (test) {
+    var count = 0;
+    var e = storage.listQueues();
+    e.on('data', function (queue) {
+      test.notEqual(queue,null);
+      count++;
+    });
+    e.on('end', function(c) {
+      test.notEqual(c,null);
+      test.strictEqual(count,c);
+      test.strictEqual(count,2);
+      test.done();
+    });
+  },
+
   queuePutMessage: function (test) {
     var queue = storage.queue(this.queueName);
     queue.put('Queue Test Message', function(err) {
