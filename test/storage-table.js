@@ -225,23 +225,6 @@ module.exports = testCase({
     });
   },
 
-  tableContinuations: function(test) {
-    var counter = 0;
-    var size = 1002;
-    var t = storage.table('barfoo');
-    for (var i = 0; i < size; i++) {
-      t.insert('c','' + i, function(err) {
-        test.equals(err,null);
-        if (counter === size) {
-          t.rows().on('end', function(count) {
-            test.equals(size,count);
-            test.done();
-          });
-        }
-      });
-    }
-  },
-
   removeTable: function (test) {
     storage.removeTable(this.tableName, function(err) {
       storage.removeTable('barfoo', function(err) {

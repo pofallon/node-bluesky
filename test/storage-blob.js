@@ -35,6 +35,11 @@ module.exports = testCase({
     });
   },
 
+  createWithoutCallback: function (test) {
+    storage.createContainer("nonblob");
+    test.done();
+  },
+
   createdContainerInList: function (test) {
     var theContainer = this.containerName;
     storage.listContainers(function(err,containers) {
@@ -177,35 +182,15 @@ module.exports = testCase({
   
   }, */
 
-  blobPutLargeStream: function(test) {
-    
-    var c = storage.container(this.containerName);
-    var lorem = new LoremIpStream(750*1024);
-    var s = c.put('lorem.txt');
-    s.metadata.bar = "foo";
-
-    s.on('end', function() {
-      test.done();
-    });
-    
-    s.on('error', function(err) {
-      test.equals(err,null,'writeStream emitted an error: ' + err.message);
-      test.done();
-    });
-
-    lorem.pipe(s);
-
-  },
-
   listBlobs: function(test) {
 
     var c = storage.container(this.containerName);
     c.list(function(err,blobs) {
       test.equals(err,null);
       test.notEqual(blobs,null);
-      // Should have blob.txt, blob2.txt and lorem.txt
-      // If you uncomment the small image test, you'll need to make this '4'
-      test.strictEqual(blobs.length,3);
+      // Should have blob.txt and blob2.txt
+      // If you uncomment the small image test, you'll need to make this '3'
+      test.strictEqual(blobs.length,2);
       test.notStrictEqual(blobs.indexOf('blob.txt'),-1);
       test.done();
     });
@@ -217,7 +202,7 @@ module.exports = testCase({
     var counter = 0;
 
     var c = storage.container(this.containerName);
-    var e = c.list('lorem');
+    var e = c.list('blob2');
     e.on('data', function(blob) {
       test.notEqual(blob,null);
       counter++;
@@ -232,10 +217,10 @@ module.exports = testCase({
 
   deleteBlob: function(test) {
     var c = storage.container(this.containerName);
-    c.del('lorem.txt', function(err) {
+    c.del('blob2.txt', function(err) {
       test.equals(err,null);
       c.list().on('end', function(count) {
-        test.strictEqual(count,2);
+        test.strictEqual(count,1);
         test.done();
       });
     });
@@ -244,9 +229,9 @@ module.exports = testCase({
   removeContainer: function (test) {
     storage.removeContainer(this.containerName, function(err) {
       test.equals(err,null);
-      storage.removeContainer('barblob', function(err) {
-        test.done();
-      });
+      storage.removeContainer('barblob');
+      storage.removeContainer('nonblob');
+      test.done();
     });
   },
   

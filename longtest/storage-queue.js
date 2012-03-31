@@ -16,7 +16,7 @@ module.exports = testCase({
 
   setUp: function (callback) {
 
-    this.queueName = 'fooqueue';
+    this.queueName = 'longqueue';
 
     callback();
     
@@ -46,65 +46,21 @@ module.exports = testCase({
     });
   },
 
-  getQueueByPrefix: function (test) {
-    storage.createQueue("barqueue", function(err, queue) {
-      storage.listQueues("bar", function(err,queues) {
+  queuePolling: function(test) {
+    var queue = storage.queue(this.queueName);
+    queue.on('message', function(m) {
+      queue.poll(false);
+      test.equals(m.messagetext,'Queue Poll Message');
+      queue.del(m.messageid, m.popreceipt, function(err) {
         test.equals(err,null);
-        test.notEqual(queues,null);
-        if (queues) {
-          test.strictEqual(queues.length,1);
-          test.strictEqual(queues[0],"barqueue");
-        }
         test.done();
       });
     });
-  },
-
-  listQueuesAsEmitter: function (test) {
-    var count = 0;
-    var e = storage.listQueues();
-    e.on('data', function (queue) {
-      test.notEqual(queue,null);
-      count++;
-    });
-    e.on('end', function(c) {
-      test.notEqual(c,null);
-      test.strictEqual(count,c);
-      test.strictEqual(count,2);
-      test.done();
-    });
-  },
-
-  queuePutMessage: function (test) {
-    var queue = storage.queue(this.queueName);
-    queue.put('Queue Test Message', function(err) {
+    queue.poll(10000);  // Every 10 sec.
+    queue.put('Queue Poll Message', function(err) {
       test.equals(err,null);
-      test.done();
     });
   },
-  
-  queuePeekMessage: function (test) {
-    var queue = storage.queue(this.queueName);
-    queue.peek(function(err, message) {
-      test.equals(err,null);
-      test.equals(message.messagetext, 'Queue Test Message');
-      test.done();
-    });
-  },
-  
-  queueGetAndDeleteMessage: function(test) {
-    var queue = storage.queue(this.queueName);
-    queue.get(function(err, message) {
-      test.equals(err,null);
-      test.equals(message.messagetext,'Queue Test Message');
-      setTimeout(function() {
-        queue.del(message.messageid, message.popreceipt, function(err) {
-          test.equals(err,null);
-          test.done();
-        });
-      },500);
-    });
-  }, 
   
   removeQueue: function (test) {
     storage.removeQueue(this.queueName, function(err) {
