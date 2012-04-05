@@ -75,6 +75,15 @@ module.exports = testCase({
     });
   },
 
+  getTablesWithLimit: function(test) {
+    storage.listTables({limit:1}, function(err, tables) {
+      test.equals(err,null);
+      test.notEqual(tables,null);
+      test.strictEqual(tables.length,1);
+      test.done();
+    });
+  },
+
   tableInsertRow: function (test) {
     var t = storage.table(this.tableName);
     t.insert(this.partitionKey,this.rowKey,{'one':'uno', 'two': 2, 'three': true, 'four': new Date('2010-12-23T23:12:11.234Z') }, function(err) {
@@ -216,6 +225,16 @@ module.exports = testCase({
       });
     });
   },
+
+  /* tableTopRows: function(test) {
+    var t = storage.table(this.tableName);
+    t.top(2).rows(function(err,rows) {
+      test.equals(err,null);
+      test.notEqual(rows,null);
+      test.strictEqual(rows.length,2);
+      test.done();
+    });
+  }, */
 
   tableDeleteRow: function (test) {
     var t = storage.table(this.tableName);

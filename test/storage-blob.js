@@ -77,6 +77,15 @@ module.exports = testCase({
     });
   },
 
+  getContainersWithLimit: function (test) {
+    storage.listContainers({limit:1}, function(err, containers) {
+      test.equals(err,null);
+      test.notEqual(containers,null);
+      test.strictEqual(containers.length,1);
+      test.done();
+    });
+  },
+
   blobPut: function (test) {
     var c = storage.container(this.containerName);
     var memStream = new MemoryStream();
@@ -213,6 +222,16 @@ module.exports = testCase({
       test.done();
     });
 
+  },
+
+  listBlobsWithLimit: function(test) {
+    var c = storage.container(this.containerName);
+    c.list({limit:1}, function(err,blobs) {
+      test.equals(err,null);
+      test.notEqual(blobs,null);
+      test.strictEqual(blobs.length,1);
+      test.done();
+    });
   },
 
   deleteBlob: function(test) {

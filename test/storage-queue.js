@@ -75,6 +75,17 @@ module.exports = testCase({
     });
   },
 
+  getQueuesWithLimit: function(test) {
+    storage.listQueues({limit:1},function(err,queues) {
+      test.equals(err,null);
+      test.notEqual(queues,null);
+      if (queues) {
+        test.strictEqual(queues.length,1);
+      }
+      test.done();
+    });
+  },
+
   queuePutMessage: function (test) {
     var queue = storage.queue(this.queueName);
     queue.put('Queue Test Message', function(err) {
