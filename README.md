@@ -22,7 +22,7 @@ c1.get('readme.txt', function(err, readme) {
 
 // and tables, oh my! 
 var t = s.table('folks');
-t.filter({'user': 'joe', 'visits': 1, 'isPremium': true}).forEach(function(err, row) {
+t.filter({'user': 'joe', 'visits': 1, 'isPremium': true}).rows().on('data', function(err, row) {
   console.log(row.user + ', ' + row.visits + ', ' + row.isPremium);
 });
 
@@ -47,14 +47,12 @@ This library depends on:
 * [bentomas/node-mime](/bentomas/node-mime)
 * [broofa/node-uuid](/broofa/node-uuid)
 * [documentcloud/underscore](/documentcloud/underscore)
-* [felixge/node-dateformat](/felixge/node-dateformat)
-* [isaacs/sax-js](/isaacs/sax-js)
-* [mikeal/request](/mikeal/request)
+* [JSBizon/memorystream](/JSBizon/memorystream)
+* [WindowsAzure/azure-sdk-for-node](/WindowsAzure/azure-sdk-for-node)
 
 ... and for unit tests:
 
 * [caolan/nodeunit](/caolan/nodeunit)
-* [JSBizon/memorystream](/JSBizon/memorystream)
 * [pofallon/loremipstream](/pofallon/loremipstream)
 
 ## Special Thanks
