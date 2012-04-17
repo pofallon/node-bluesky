@@ -29,7 +29,8 @@
     "lib",
     "package.json",
     "README.md",
-    "test"
+    "test",
+    "longtest"
   ],
   "main": "index",
   "license": "MIT"
