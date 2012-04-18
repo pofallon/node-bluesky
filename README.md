@@ -22,7 +22,7 @@ c1.get('readme.txt', function(err, readme) {
 
 // and tables, oh my! 
 var t = s.table('folks');
-t.filter({'user': 'joe', 'visits': 1, 'isPremium': true}).rows().on('data', function(err, row) {
+t.filter('isPremium': true}).rows().on('data', function(err, row) {
   console.log(row.user + ', ' + row.visits + ', ' + row.isPremium);
 });
 
