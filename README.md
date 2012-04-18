@@ -1,5 +1,5 @@
 # node-bluesky
-A lightweight, high-performance node.js library for accessing Windows Azure
+A lightweight, simplified node.js library for accessing Windows Azure storage
 
 ## Usage
 
@@ -58,9 +58,3 @@ This library depends on:
 ## Special Thanks
 
 …to Cerebrata for [Cloud Storage Studio](http://www.cerebrata.com/products/cloudstoragestudio/) - an indispensible tool (along with [fiddler2](http://www.fiddler2.com/fiddler2/)) in the node-bluesky debugging process!
-
-## TODO
-
-* Finish table, add blob and queue API's
-* Management API's
-* AppFabric API's
