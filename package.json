@@ -16,14 +16,14 @@
     "mime": "1.x.x",
     "node-uuid": "1.x.x",
     "underscore": "1.x.x",
-    "azure": "http://github.com/WindowsAzure/azure-sdk-for-node/tarball/dev"
+    "azure": ">=0.5.3"
   },
   "devDependencies": {
     "nodeunit": "0.x.x",
     "loremipstream" : "0.0.x"
   },
   "engine": "node >= 0.6.0",
-  "version": "0.5.0alpha",
+  "version": "0.5.0",
   "files": [
     "index.js",
     "lib",
