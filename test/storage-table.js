@@ -226,7 +226,7 @@ module.exports = testCase({
     });
   },
 
-  /* tableTopRows: function(test) {
+  tableTopRows: function(test) {
     var t = storage.table(this.tableName);
     t.top(2).rows(function(err,rows) {
       test.equals(err,null);
@@ -234,7 +234,20 @@ module.exports = testCase({
       test.strictEqual(rows.length,2);
       test.done();
     });
-  }, */
+  },
+
+  tableInsertNoRowKey: function (test) {
+    var that = this;
+    var t = storage.table(this.tableName);
+    t.insert(this.partitionKey,{'test':'uuidtest'}, function(err, rowKey) {
+      test.equals(err,null);
+      test.notEqual(rowKey,null);
+      t.whereKeys(that.partitionKey,rowKey).rows(function(err, rows) {
+        test.equals(rows.length,1);
+        test.done();
+      });
+    });
+  },
 
   tableDeleteRow: function (test) {
     var t = storage.table(this.tableName);
