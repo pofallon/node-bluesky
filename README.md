@@ -8,17 +8,16 @@ var s = require('bluesky').storage({account: 'account', key: 'key'});
 
 // queues, with events
 var q = s.queue('happenings');
-q.on('message', function(m) {
+q.on('message', function(m, done) {
   console.log(m.body);
+  done();
 });
 q.poll(10000);
 
 // blobs, as streams
 var c1 = s.container('new');
 var c2 = s.container('old');
-c1.get('readme.txt', function(err, readme) {
-	readme.pipe(c2.put('archive.txt'));
-});
+c1.get('readme.txt').pipe(c2.put('archive.txt'));
 
 // and tables, oh my! 
 var t = s.table('folks');
