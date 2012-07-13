@@ -103,16 +103,14 @@ module.exports = testCase({
     });
   },
   
-  queueGetAndDeleteMessage: function(test) {
+  queueGetMessage: function(test) {
     var queue = storage.queue(this.queueName);
-    queue.get(function(err, message) {
+    queue.get(function(err, message, done) {
       test.equals(err,null);
       test.equals(message.messagetext,'Queue Test Message');
       setTimeout(function() {
-        queue.del(message.messageid, message.popreceipt, function(err) {
-          test.equals(err,null);
-          test.done();
-        });
+        done();
+        test.done();
       },500);
     });
   }, 

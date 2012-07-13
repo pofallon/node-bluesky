@@ -118,7 +118,7 @@ module.exports = testCase({
         test.notEqual(s,null);
         if (s) {
           s.on("error", function(error) {
-            test.equals(error,null,"Stream emitted an error event.");
+            test.equals(error,null,'Stream emitted an error event.');
             test.done();
           });
           s.on("end", function() {
@@ -130,6 +130,26 @@ module.exports = testCase({
       });
     }, 1000);
     
+  },
+
+  blobDirectGet: function (test) {
+
+    var memStream = new MemoryStream(null, {readable: false});
+
+    var c = storage.container(this.containerName);
+    var s = c.get('blob.txt');
+    test.notEqual(s,null);
+    if (s) {
+      s.on("error", function(error) {
+        test.equals(error,null,'Stream emitted an error event.');
+        test.done();
+      });
+      s.on("end", function() {
+        test.equals(memStream.getAll(),'This is a text blob');
+        test.done();
+      });
+      s.pipe(memStream);
+    }
   },
 
   blobPipeGetToPut: function (test) {
