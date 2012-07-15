@@ -23,7 +23,7 @@
     "loremipstream" : "0.0.x"
   },
   "engine": "node >= 0.6.0",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "files": [
     "index.js",
     "lib",
