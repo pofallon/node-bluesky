@@ -8,8 +8,8 @@ var s = require('bluesky').storage({account: 'account', key: 'key'});
 
 // queues, with events
 var q = s.queue('happenings');
-q.on('message', function(m, done) {
-  console.log(m.body);
+q.on('message', function(msg, done) {
+  console.log(msg);
   done();
 });
 q.poll(10000);
@@ -21,7 +21,7 @@ c1.get('readme.txt').pipe(c2.put('archive.txt'));
 
 // and tables, oh my! 
 var t = s.table('folks');
-t.filter('isPremium': true}).rows().on('data', function(err, row) {
+t.filter({'isPremium': true}).rows().on('data', function(err, row) {
   console.log(row.user + ', ' + row.visits + ', ' + row.isPremium);
 });
 
