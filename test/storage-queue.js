@@ -107,7 +107,7 @@ module.exports = testCase({
     var queue = storage.queue(this.queueName);
     queue.get(function(err, message, done) {
       test.equals(err,null);
-      test.equals(message.messagetext,'Queue Test Message');
+      test.equals(message,'Queue Test Message');
       setTimeout(function() {
         done();
         test.done();
