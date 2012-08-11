@@ -1,6 +1,6 @@
 {
   "name": "bluesky",
-  "description": "A node.js library for accessing Azure REST-based services",
+  "description": "A node.js library for accessing Azure services",
   "keywords": ["azure", "cloud", "paas"],
   "author": "Paul O'Fallon <paul@ofallonfamily.com>",
   "homepage": "https://github.com/pofallon/node-bluesky",
@@ -23,7 +23,7 @@
     "loremipstream" : "0.0.x"
   },
   "engine": "node >= 0.6.0",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "files": [
     "index.js",
     "lib",
