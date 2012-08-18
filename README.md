@@ -10,9 +10,9 @@ var s = require('bluesky').storage({account: 'account', key: 'key'});
 var q = s.queue('happenings');
 q.on('message', function(msg, done) {
   console.log(msg);
-  done();
+  done();  // delete the message
 });
-q.poll(10000);
+q.poll(1000);
 
 // blobs, as streams
 var c1 = s.container('new');
