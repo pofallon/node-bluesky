@@ -19,20 +19,26 @@ module.exports = testCase({
 
   setUp: function (callback) {
 
-    this.containerName = "longblob";
+    this.containerPrefix = "longblob";
+    this.containerCount = 5050;
+    this.containerName = "longblob1";
     callback();
     
   },
   
-  createContainer: function (test) {
-    var theContainer = this.containerName;
-    storage.createContainer(theContainer, function(err,container) {
-      test.equals(err,null);
-      test.notEqual(container,null);
-      if (!container) { container = {}; }
-      test.equals(container.name,theContainer);
-      test.done();
-    });
+  createContainers: function (test) {
+    var completedCount = 0;
+    var theCount = this.containerCount;
+    var theContainer = this.containerPrefix;
+    for (var i = 1; i <= theCount; i++) {
+      storage.createContainer(theContainer+i, function(err,container) {
+        test.equals(err,null);
+        test.notEqual(container,null);
+        if (++completedCount === theCount) {
+          test.done();
+        }
+      });
+    };
   },
 
   createdContainerInList: function (test) {
@@ -40,6 +46,29 @@ module.exports = testCase({
     storage.listContainers(function(err,containers) {
       test.equals(err,null);
       test.notStrictEqual(containers.indexOf(theContainer),-1);
+      test.done();
+    });
+  },
+
+  containerCountEvent: function (test) {
+    var theCount = this.containerCount;
+    storage.listContainers('longblob').on('end', function(count) {
+      test.equals(count,theCount);
+      test.done();
+    });
+  },
+
+  containerLimitNoContinuation: function (test) {
+    storage.listContainers({limit: 10}).on('end', function(count) {
+      test.equals(count,10);
+      test.done();
+    });
+  },
+
+  containerLimitFollowContinuation: function (test) {
+    var theCount = this.containerCount-1;
+    storage.listContainers({limit: theCount}).on('end', function(count) {
+      test.equals(count,theCount);
       test.done();
     });
   },
@@ -64,12 +93,11 @@ module.exports = testCase({
 
   },
 
-  removeContainer: function (test) {
-    storage.removeContainer(this.containerName, function(err) {
-      test.equals(err,null);
-      storage.removeContainer('barblob', function(err) {
-        test.done();
-      });
+  removeContainers: function (test) {
+    storage.listContainers(this.containerPrefix).on('data', function(c) {
+     storage.removeContainer(c);
+    }).on('end', function() {
+      test.done();
     });
   },
   

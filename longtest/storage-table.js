@@ -64,6 +64,14 @@ module.exports = testCase({
     }
   },
 
+  // rowsWithLimit: function(test) {
+  //   var limitCount = 5;
+  //   t.rows({limit: limitCount}).on('end', function(count) {
+  //     test.equals(limitCount, count);
+  //     test.done();
+  //   });
+  // },
+
   removeTable: function (test) {
     storage.removeTable(this.tableName, function(err) {
       test.equals(err,null);

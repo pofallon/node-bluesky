@@ -48,15 +48,13 @@ module.exports = testCase({
 
   queuePolling: function(test) {
     var queue = storage.queue(this.queueName);
-    queue.on('message', function(m) {
+    queue.on('message', function(m, done) {
+      test.equals(m,'Queue Poll Message');
+      done();
       queue.poll(false);
-      test.equals(m.messagetext,'Queue Poll Message');
-      queue.del(m.messageid, m.popreceipt, function(err) {
-        test.equals(err,null);
-        test.done();
-      });
+      test.done();
     });
-    queue.poll(10000);  // Every 10 sec.
+    queue.poll(1000);  // Every 1 sec.
     queue.put('Queue Poll Message', function(err) {
       test.equals(err,null);
     });
