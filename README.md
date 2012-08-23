@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/pofallon/node-bluesky.png)](http://travis-ci.org/pofallon/node-bluesky)
 # node-bluesky
 A lightweight, simplified node.js library for accessing Windows Azure storage
 
