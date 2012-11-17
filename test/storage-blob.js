@@ -90,6 +90,7 @@ module.exports = testCase({
     var c = storage.container(this.containerName);
     var memStream = new MemoryStream();
     var s = c.put('blob.txt');
+    s.metadata = {'foo1':'bar1'};
     s.on('close', function() {
       test.done();
     });
@@ -117,6 +118,7 @@ module.exports = testCase({
         test.equals(err,null);
         test.notEqual(s,null);
         if (s) {
+          test.deepEqual(s.metadata,{'foo1':'bar1'});
           s.on("error", function(error) {
             test.equals(error,null,'Stream emitted an error event.');
             test.done();
@@ -142,6 +144,7 @@ module.exports = testCase({
     if (s) {
       s.on("details", function(details) {
         test.equals(details.properties.blobType,'BlockBlob');
+        test.deepEqual(details.metadata,{'foo1':'bar1'});
       });
       s.on("error", function(error) {
         test.equals(error,null,'Stream emitted an error event.');
@@ -171,6 +174,7 @@ module.exports = testCase({
             c.get('blob2.txt', function(err,s2) {
               test.equals(err,null);
               test.notEqual(s2,null);
+              test.deepEqual(s2.metadata,{'foo1':'bar1'});
               s2.on("end", function() {
                 test.equals(m1.getAll(), m2.getAll());
                 test.done();
