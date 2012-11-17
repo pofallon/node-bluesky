@@ -140,6 +140,9 @@ module.exports = testCase({
     var s = c.get('blob.txt');
     test.notEqual(s,null);
     if (s) {
+      s.on("details", function(details) {
+        test.equals(details.properties.blobType,'BlockBlob');
+      });
       s.on("error", function(error) {
         test.equals(error,null,'Stream emitted an error event.');
         test.done();
