@@ -1,8 +1,6 @@
 # node-bluesky
 A lightweight, simplified node.js library for accessing Windows Azure storage
 
-[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/45298f46f07f1fbc9faa638f2bccdc8a "githalytics.com")](http://githalytics.com/pofallon/node-bluesky)
-
 ## Usage
 
 ```javascript
@@ -59,3 +57,5 @@ This library depends on:
 ## Special Thanks
 
 …to Cerebrata for [Cloud Storage Studio](http://www.cerebrata.com/products/cloudstoragestudio/) - an indispensible tool (along with [fiddler2](http://www.fiddler2.com/fiddler2/)) in the node-bluesky debugging process!
+
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/45298f46f07f1fbc9faa638f2bccdc8a "githalytics.com")](http://githalytics.com/pofallon/node-bluesky)
