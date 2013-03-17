@@ -1,6 +1,8 @@
 # node-bluesky
 A lightweight, simplified node.js library for accessing Windows Azure storage
 
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/45298f46f07f1fbc9faa638f2bccdc8a "githalytics.com")](http://githalytics.com/pofallon/node-bluesky)
+
 ## Usage
 
 ```javascript
