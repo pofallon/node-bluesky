@@ -22,8 +22,8 @@
     "nodeunit": "0.x.x",
     "loremipstream" : "0.0.x"
   },
-  "engine": "node >= 0.6.0",
-  "version": "0.6.6",
+  "engine": "node >= 0.6.0 <= 0.10.0",
+  "version": "0.6.7",
   "files": [
     "index.js",
     "lib",

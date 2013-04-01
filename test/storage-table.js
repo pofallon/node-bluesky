@@ -110,10 +110,10 @@ module.exports = testCase({
       
         test.equals(typeof(results[0].two), 'number');
         test.equals(results[0].two, 2);
-      
+
         test.equals(typeof(results[0].three), 'boolean');
         test.equals(results[0].three, true);
-      
+
         test.equals((results[0].four instanceof Date), true);
         var d = new Date('2010-12-23T23:12:11.234Z');
         test.deepEqual(results[0].four,d);
