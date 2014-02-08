@@ -107,55 +107,33 @@ module.exports = testCase({
 
     var that = this;
 
-    // Need to give it a second because immediately 
-    // 'get'-ing the blob sometimes returns not found
-
-    setTimeout(function() {
-      var memStream = new MemoryStream(null, {readable: false});
-
-      var c = storage.container(that.containerName);
-      c.get('blob.txt', function(err,s) {
-        test.equals(err,null);
-        test.notEqual(s,null);
-        if (s) {
-          test.deepEqual(s.metadata,{'foo1':'bar1'});
-          s.on("error", function(error) {
-            test.equals(error,null,'Stream emitted an error event.');
-            test.done();
-          });
-          s.on("end", function() {
-            test.equals(memStream.getAll(),'This is a text blob');
-            test.done();
-          });
-          s.pipe(memStream);
-        }
-      });
-    }, 1000);
-    
-  },
-
-  blobDirectGet: function (test) {
-
     var memStream = new MemoryStream(null, {readable: false});
 
-    var c = storage.container(this.containerName);
-    var s = c.get('blob.txt');
-    test.notEqual(s,null);
-    if (s) {
-      s.on("details", function(details) {
-        test.equals(details.properties.blobType,'BlockBlob');
-        test.deepEqual(details.metadata,{'foo1':'bar1'});
-      });
-      s.on("error", function(error) {
-        test.equals(error,null,'Stream emitted an error event.');
-        test.done();
-      });
-      s.on("end", function() {
-        test.equals(memStream.getAll(),'This is a text blob');
-        test.done();
-      });
-      s.pipe(memStream);
-    }
+    test.expect(4);
+
+    setTimeout(function() {
+
+      var c = storage.container(that.containerName);
+      var s = c.get('blob.txt');
+      test.notEqual(s,null);
+      if (s) {
+        s.on("details", function(details) {
+          test.equals(details.properties.blobType,'BlockBlob');
+          test.deepEqual(details.metadata,{'foo1':'bar1'});
+        });
+        s.on("error", function(error) {
+          test.equals(error,null,'Stream emitted an error event.');
+          test.done();
+        });
+        s.on("end", function() {
+          test.equals(memStream.getAll(),'This is a text blob');
+          test.done();
+        });
+        s.pipe(memStream);
+      }
+
+    }, 1000);
+
   },
 
   blobPipeGetToPut: function (test) {
@@ -165,37 +143,30 @@ module.exports = testCase({
     var s = c.put('blob2.txt');
     s.on('close', function() {
       var m1 = new MemoryStream(null, {readable: false});
-      c.get('blob.txt', function(err,s1) {
-        test.equals(err,null);
-        test.notEqual(s1,null);
-        s1.on("end", function() {
-          setTimeout(function() {
-            var m2 = new MemoryStream(null, {readable: false});
-            c.get('blob2.txt', function(err,s2) {
-              test.equals(err,null);
-              test.notEqual(s2,null);
-              test.deepEqual(s2.metadata,{'foo1':'bar1'});
-              s2.on("end", function() {
-                test.equals(m1.getAll(), m2.getAll());
-                test.done();
-              });
-              s2.pipe(m2);
-            });
-          }, 1000);
-        });
-        s1.pipe(m1);
+      var s1 = c.get('blob.txt');
+      test.notEqual(s1,null);
+      s1.on("end", function() {
+        setTimeout(function() {
+          var m2 = new MemoryStream(null, {readable: false});
+          var s2 = c.get('blob2.txt');
+          test.notEqual(s2,null);
+          s2.on("end", function() {
+            test.deepEqual(s2.metadata,{'foo1':'bar1'});
+            test.equals(m1.getAll(), m2.getAll());
+            test.done();
+          });
+          s2.pipe(m2);
+        }, 1000);
       });
+      s1.pipe(m1);
     });
     s.on('error', function(err) {
       test.equals(err,null,'writeStream emitted an error:' + err.message);
       test.done();
     });
-    c.get('blob.txt', function(err,b) {
-      test.equals(err,null);
-      test.notEqual(b,null);
-      b.pipe(s);
-    });
-
+    b = c.get('blob.txt');
+    test.notEqual(b,null);
+    b.pipe(s);
   },
 
   /* blobPutSmallImage: function(test) {
