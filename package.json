@@ -16,14 +16,15 @@
     "mime": "1.x.x",
     "node-uuid": "1.x.x",
     "underscore": "1.x.x",
-    "azure": ">=0.5.3"
+    "azure": ">=0.5.3",
+    "azure-common": "0.9.1-pre.2"
   },
   "devDependencies": {
     "nodeunit": "0.x.x",
     "loremipstream" : "0.0.x"
   },
   "engine": "node >= 0.6.0 <= 0.10.0",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "files": [
     "index.js",
     "lib",
