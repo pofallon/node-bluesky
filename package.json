@@ -16,8 +16,7 @@
     "mime": "1.x.x",
     "node-uuid": "1.x.x",
     "underscore": "1.x.x",
-    "azure": ">=0.5.3",
-    "azure-common": "0.9.1-pre.2"
+    "azure": ">=0.5.3"
   },
   "devDependencies": {
     "nodeunit": "0.x.x",
