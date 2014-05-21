@@ -9,7 +9,7 @@ var testCase = require('nodeunit').testCase;
 
 var path = process.env.HOME || (process.env.HOMEDRIVE + process.env.HOMEPATH);
 var testCredentials = JSON.parse(fs.readFileSync(path + '/.bluesky/test.json','ascii'));
-    
+
 var storage = require('../lib/bluesky').storage({account: testCredentials.account, key: testCredentials.key});
 
 module.exports = testCase({
@@ -19,7 +19,7 @@ module.exports = testCase({
     this.tableName = "foobar";
     this.partitionKey = "foo";
     this.rowKey = "bar";
-    
+
     callback();
   },
 
@@ -104,10 +104,10 @@ module.exports = testCase({
       if (results) {
         test.equals(results[0].PartitionKey,myPartition);
         test.equals(results[0].RowKey,myRow);
-      
+
         test.equals(typeof(results[0].one), 'string');
         test.equals(results[0].one, 'uno');
-      
+
         test.equals(typeof(results[0].two), 'number');
         test.equals(results[0].two, 2);
 
@@ -118,17 +118,17 @@ module.exports = testCase({
         var d = new Date('2010-12-23T23:12:11.234Z');
         test.deepEqual(results[0].four,d);
       }
-      
+
       test.done();
     });
   },
-  
+
   tableBasicFilterAll: function (test) {
     var myPartition = this.partitionKey;
     var myRow = this.rowKey;
-    
+
     var t = storage.table(this.tableName);
-    
+
     t.insert(this.partitionKey,'foo2',{'one':'unouno', 'two':4, 'three':false, 'four': new Date() }, function(err) {
       test.equals(err,null);
       t.rows(function(err,r) {
@@ -155,13 +155,13 @@ module.exports = testCase({
       });
     });
   },
-  
+
   tableNoFilterEmitter: function(test) {
     var myPartition = this.partitionKey;
     var myRow = this.rowKey;
-    
+
     var t = storage.table(this.tableName);
-    
+
     var count = 0;
 
     var e = t.rows();
@@ -176,16 +176,16 @@ module.exports = testCase({
     e.on('error', function(err) {
       test.equals(err,null);
     });
-    
+
   },
-  
+
   tableFieldsAll: function(test) {
-    
+
     var t = storage.table(this.tableName);
-    
+
     var thePartitionKey = this.partitionKey;
     var theRowKey = this.rowKey;
-    
+
     t.select('PartitionKey','RowKey').rows(function(err,rows) {
       test.equals(err,null);
       test.notEqual(rows,null);
@@ -203,7 +203,7 @@ module.exports = testCase({
       }
     });
   },
-  
+
   tableUpdateRow: function (test) {
     var t = storage.table(this.tableName);
     t.update(this.partitionKey,this.rowKey,{'one':'eleven', 'two': 22, 'three': true, 'four': new Date('2010-12-23T23:12:11.234Z') }, function(err) {
@@ -214,7 +214,7 @@ module.exports = testCase({
       });
     });
   },
-  
+
   tableUpsertRow: function (test) {
     var t = storage.table(this.tableName);
     t.update(this.partitionKey,"upsertRow",{'one':'1111', 'two':222, 'three': false }, {upsert: true}, function(err) {
@@ -226,15 +226,16 @@ module.exports = testCase({
     });
   },
 
-  tableTopRows: function(test) {
-    var t = storage.table(this.tableName);
-    t.top(2).rows(function(err,rows) {
-      test.equals(err,null);
-      test.notEqual(rows,null);
-      test.strictEqual(rows.length,2);
-      test.done();
-    });
-  },
+  // tableTopRows: function(test) {
+  //   var t = storage.table(this.tableName);
+  //   t.top(2).rows(function(err,rows) {
+  //     test.equals(err,null);
+  //     test.notEqual(rows,null);
+  //     console.dir(rows);
+  //     test.strictEqual(rows.length,2);
+  //     test.done();
+  //   });
+  // },
 
   tableInsertNoRowKey: function (test) {
     var that = this;
