@@ -9,8 +9,10 @@ var testCase = require('nodeunit').testCase;
 
 var path = process.env.HOME || (process.env.HOMEDRIVE + process.env.HOMEPATH);
 var testCredentials = JSON.parse(fs.readFileSync(path + '/.bluesky/test.json','ascii'));
-    
-var storage = require('../lib/bluesky').storage({account: testCredentials.account, key: testCredentials.key});
+
+// For this test, let's pass in an 'azure', rather than requiring it internally
+var azure = require('azure');
+var storage = require('../lib/bluesky').storage({azure: azure, account: testCredentials.account, key: testCredentials.key});
 
 module.exports = testCase({
 
@@ -19,21 +21,21 @@ module.exports = testCase({
     this.queueName = 'fooqueue';
 
     callback();
-    
+
   },
-  
+
   createQueue: function (test) {
     var theQueue = this.queueName;
     storage.createQueue(theQueue, function(err,queue) {
       test.equals(err,null);
       test.notEqual(queue,null);
-      if (queue) { 
+      if (queue) {
         test.equals(queue.name,theQueue);
       }
       test.done();
     });
   },
-  
+
   createdQueueInList: function (test) {
     var theQueue = this.queueName;
     storage.listQueues(function(err,queues) {
@@ -93,7 +95,7 @@ module.exports = testCase({
       test.done();
     });
   },
-  
+
   queuePeekMessage: function (test) {
     var queue = storage.queue(this.queueName);
     queue.peek(function(err, message) {
@@ -102,7 +104,7 @@ module.exports = testCase({
       test.done();
     });
   },
-  
+
   queueGetMessage: function(test) {
     var queue = storage.queue(this.queueName);
     queue.get(function(err, message, done) {
@@ -113,8 +115,8 @@ module.exports = testCase({
         test.done();
       },500);
     });
-  }, 
-  
+  },
+
   removeQueue: function (test) {
     storage.removeQueue(this.queueName, function(err) {
       test.equals(err,null);
@@ -123,7 +125,7 @@ module.exports = testCase({
       });
     });
   },
-  
+
   queueNoLongerInList: function (test) {
     var theQueue = this.queueName;
     storage.listQueues(function(err,queues) {
@@ -135,5 +137,5 @@ module.exports = testCase({
       test.done();
     });
   }
-  
+
 });
