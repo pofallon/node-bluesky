@@ -24,7 +24,7 @@
     "azure": ">=0.5.3"
   },
   "engine": "node >= 0.6.0 <= 0.10.0",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "files": [
     "index.js",
     "lib",
