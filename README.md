@@ -11,7 +11,7 @@ var s = require('bluesky').storage({account: 'account', key: 'key'});
 
 // or, if using bluesky-lite
 var azure = require('azure');
-var s = require('bluesky').storage({azure: azure, account: 'account', key: 'key'});
+var s = require('bluesky-lite').storage({azure: azure, account: 'account', key: 'key'});
 
 // queues, with events
 var q = s.queue('happenings');
